@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b12d6f8e-1e9c-409f-b507-d967c9fcb1fd" name="Default" comment="Cleaned up the directory.">
-      <change beforePath="$PROJECT_DIR$/.idea/w4111-Databases.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/w4111-Databases.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/CSVDataTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/CSVDataTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/RDBDataTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/RDBDataTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/unit_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/unit_tests.py" afterDir="false" />
-    </list>
+    <list default="true" id="b12d6f8e-1e9c-409f-b507-d967c9fcb1fd" name="Default" comment="Cleaned up the directory." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +31,12 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../E6156CloudNativeApplications/E6156-Cloud-Native-Applications/Projects/EB" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -227,7 +227,7 @@
       <workItem from="1565554391535" duration="25201000" />
       <workItem from="1565900682678" duration="9000" />
       <workItem from="1565910391322" duration="643000" />
-      <workItem from="1569457185827" duration="904000" />
+      <workItem from="1569457185827" duration="1635000" />
     </task>
     <task id="LOCAL-00001" summary="Moved content">
       <created>1545233951773</created>
