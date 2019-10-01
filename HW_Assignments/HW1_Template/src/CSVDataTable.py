@@ -125,7 +125,14 @@ class CSVDataTable(BaseDataTable):
         :return: A list containing dictionaries. A dictionary is in the list representing each record
             that matches the template. The dictionary only contains the requested fields.
         """
-        pass
+        results = []
+        for row in self._rows:
+            if matches_template(row, template) == True:
+                short_row = {}
+                for key, val in template.items():
+                    short_row[key] = val
+            results.append(short_row)
+            return results
 
     def delete_by_key(self, key_fields):
         """
