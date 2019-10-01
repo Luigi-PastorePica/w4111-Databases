@@ -4,6 +4,7 @@
 from HW_Assignments.HW1_Template.src.CSVDataTable import CSVDataTable
 import logging
 import os
+import json
 
 
 # The logging level to use should be an environment variable, not hard coded.
@@ -30,4 +31,47 @@ def t_load():
     print("Created table = " + str(csv_tbl))
 
 
+def t_find_by_template():
+
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "Batting.csv"
+    }
+    key_cols = ['playerID', 'teamID', 'yearID', 'stint']
+    fields = ['playerID', 'teamID', 'yearID', 'AB', 'H', 'HR', 'RBI']
+    tmp = {'teamID': 'BOS', 'yearID': '1960'}
+
+    empty_key_cols = []
+    empty_fields = []
+    empty_tmp = {}
+
+    # Should return the results of SELECT <fields> FROM Batting.csv WHERE <tmp template>
+    csv_tbl = CSVDataTable("batting", connect_info, key_columns=key_cols)
+
+    res = csv_tbl.find_by_template(template=tmp, field_list=fields)
+
+    print("Query result (regular) = \n", json.dumps(res, indent=2))
+
+    # Providing no keys should return the same as the regular query above
+    csv_tbl_no_keys = CSVDataTable("no_keys", connect_info, empty_key_cols)
+
+    res = csv_tbl_no_keys.find_by_template(template=tmp, field_list=fields)
+
+    print("Query result (no keys) = \n", json.dumps(res, indent=2))
+
+    # Providing an empty set of fields should return an empty row for each row matched in the regular query above
+    csv_tbl_no_fields = CSVDataTable("batting", connect_info, key_columns=key_cols)
+
+    res = csv_tbl_no_fields.find_by_template(template=tmp, field_list=empty_fields)
+
+    print("Query result (no fields) = \n", json.dumps(res, indent=2))
+
+    # Providing an empty template should return all of the rows in the table
+    csv_tbl_no_template = CSVDataTable("batting", connect_info, key_columns=key_cols)
+
+    res = csv_tbl_no_template.find_by_template(template=empty_tmp, field_list=fields)
+
+    print("Query result (no template) = \n", json.dumps(res, indent=2))
+
 t_load()
+t_find_by_template()

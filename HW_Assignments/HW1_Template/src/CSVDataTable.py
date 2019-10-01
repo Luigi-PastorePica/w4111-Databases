@@ -127,12 +127,12 @@ class CSVDataTable(BaseDataTable):
         """
         results = []
         for row in self._rows:
-            if matches_template(row, template) == True:
+            if self.matches_template(row, template) == True:
                 short_row = {}
-                for key, val in template.items():
-                    short_row[key] = val
-            results.append(short_row)
-            return results
+                for field in field_list:
+                    short_row[field] = row.get(field)
+                results.append(short_row)
+        return results
 
     def delete_by_key(self, key_fields):
         """
