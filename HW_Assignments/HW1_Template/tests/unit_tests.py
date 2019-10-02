@@ -85,7 +85,7 @@ def t_find_by_template():
           json.dumps(res[res_last_elem - rows_to_show:res_last_elem], indent=2))
 
 
-def t_find_by_key():
+def t_find_by_primary_key():
 
     connect_info = {
         "directory": data_dir,
@@ -143,4 +143,4 @@ def t_find_by_key():
 
 t_load()
 t_find_by_template()
-t_find_by_key()
+t_find_by_primary_key()
