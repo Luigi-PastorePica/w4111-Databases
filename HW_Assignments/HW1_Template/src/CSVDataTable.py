@@ -10,6 +10,7 @@ import pandas as pd
 pd.set_option("display.width", 256)
 pd.set_option('display.max_columns', 20)
 
+
 class CSVDataTable(BaseDataTable):
     """
     The implementation classes (XXXDataTable) for CSV database, relational, etc. with extend the
@@ -55,7 +56,7 @@ class CSVDataTable(BaseDataTable):
             rows_to_print = self._rows[0:temp_r]
             keys = self._rows[0].keys()
 
-            for i in range(0,CSVDataTable._no_of_separators):
+            for i in range(0, CSVDataTable._no_of_separators):
                 tmp_row = {}
                 for k in keys:
                     tmp_row[k] = "***"
@@ -106,13 +107,37 @@ class CSVDataTable(BaseDataTable):
 
     def find_by_primary_key(self, key_fields, field_list=None):
         """
-
         :param key_fields: The list with the values for the key_columns, in order, to use to find a record.
         :param field_list: A subset of the fields of the record to return.
         :return: None, or a dictionary containing the requested fields for the record identified
             by the key.
         """
-        pass
+
+        # if field list is none, return the whole row.
+
+        key_columns = self._data.get("key_columns")
+
+        # Number of key fields should match number of key columns
+        if len(key_fields) != len(key_columns):
+            key_length_mismatch_exception = 'len(key_fields) should match len(key_columns). {} != {}'
+            raise Exception(key_length_mismatch_exception.format(len(key_fields), len(key_columns)))
+
+        # Generates a template from key_columns and key_fields
+        template = {}
+        for field_pos in range(len(key_fields)):
+            column = key_columns[field_pos]
+            field = key_fields[field_pos]
+            template[column] = field
+
+        results = self.find_by_template(template, field_list)
+
+        if len(results) == 0:
+            return None
+        elif len(results) == 1:
+            return results.pop()  # results is a list of dictionaries
+        else:
+            raise LookupError('Found more than one record with key {} : \n {}'.format(key_fields,
+                                                                                      json.dumps(results, indent=2)))
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
         """
@@ -125,13 +150,19 @@ class CSVDataTable(BaseDataTable):
         :return: A list containing dictionaries. A dictionary is in the list representing each record
             that matches the template. The dictionary only contains the requested fields.
         """
+
+        # Too many nested flow control blocks.
+        # Consider extracting into helper methods in order to adhere to single responsibility principle
         results = []
         for row in self._rows:
-            if self.matches_template(row, template) == True:
+            if self.matches_template(row, template):
                 short_row = {}
-                for field in field_list:
-                    short_row[field] = row.get(field)
-                results.append(short_row)
+                if field_list is not None:
+                    for field in field_list:
+                        short_row[field] = row.get(field)
+                    results.append(short_row)
+                else:
+                    results.append(row)
         return results
 
     def delete_by_key(self, key_fields):
@@ -139,7 +170,7 @@ class CSVDataTable(BaseDataTable):
 
         Deletes the record that matches the key.
 
-        :param template: A template.
+        :param key_fields: Keys used to find row to be deleted.
         :return: A count of the rows deleted.
         """
         pass
@@ -179,4 +210,3 @@ class CSVDataTable(BaseDataTable):
 
     def get_rows(self):
         return self._rows
-
