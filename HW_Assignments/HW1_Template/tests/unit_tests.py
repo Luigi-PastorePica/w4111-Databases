@@ -72,6 +72,14 @@ def t_find_by_template():
     res = csv_tbl_no_template.find_by_template(template=empty_tmp, field_list=fields)
 
     print("Query result (no template) = \n", json.dumps(res, indent=2))
-
+    
+def t_delete_by_template()
+    
+    # should there be an add before calling the delete?
+    # maybe there should. That way I can control how many rows there are with a certain template.
+    tmp = {'teamID': 'BOS', 'yearID': '1960'}
+    deleted_rows = delete_by_template(tmp)
+    print ("Rows deleted = ", deleted_rows)
+    
 t_load()
 t_find_by_template()

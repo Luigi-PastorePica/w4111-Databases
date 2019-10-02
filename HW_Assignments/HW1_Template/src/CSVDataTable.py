@@ -112,6 +112,9 @@ class CSVDataTable(BaseDataTable):
         :return: None, or a dictionary containing the requested fields for the record identified
             by the key.
         """
+        
+        # ok, here they want a single record returned (keys identify unique records)
+        # I can think of iterating through the row until
         pass
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
@@ -150,7 +153,13 @@ class CSVDataTable(BaseDataTable):
         :param template: Template to determine rows to delete.
         :return: Number of rows deleted.
         """
-        pass
+        rows_deleted = 0
+        for row in self._rows:
+            if matches_template(row, template):
+                self._rows.remove(row)
+                rows_deleted += 1
+                
+        return rows_deleted
 
     def update_by_key(self, key_fields, new_values):
         """
