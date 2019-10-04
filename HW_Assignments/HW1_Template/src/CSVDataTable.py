@@ -182,10 +182,15 @@ class CSVDataTable(BaseDataTable):
         :return: Number of rows deleted.
         """
         rows_deleted = 0
-        for row in self._rows:
-            if self.matches_template(row, template):
-                self._rows.remove(row)
+        row_index = 0
+
+        while row_index < len(self._rows):
+            if self.matches_template(self._rows[row_index], template):
+                self._rows.remove(self._rows[row_index])
                 rows_deleted += 1
+                row_index -= 1  # List shortens with each call to remove and contents shift
+
+            row_index += 1
                 
         return rows_deleted
 

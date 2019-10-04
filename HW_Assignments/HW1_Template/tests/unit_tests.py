@@ -140,18 +140,32 @@ def t_find_by_primary_key():
 
     print("Query result (key without match) = \n", json.dumps(res, indent=2))
 
-
     print("Query result (no template) = \n", json.dumps(res, indent=2))
-"""  
-def t_delete_by_template()
-    
+
+
+def t_delete_by_template():
+
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "Batting.csv"
+    }
+
+    key_cols = ['playerID', 'teamID', 'yearID', 'stint']
+    fields = ['playerID', 'teamID', 'yearID']
+    tmp = {'teamID': 'BOS', 'yearID': '1960'}
+
     # should there be an add before calling the delete?
     # maybe there should. That way I can control how many rows there are with a certain template.
-    tmp = {'teamID': 'BOS', 'yearID': '1960'}
-    deleted_rows = delete_by_template(tmp)
-    print ("Rows deleted = ", deleted_rows)
-"""
+
+    csv_tbl = CSVDataTable("trimmed table", connect_info, key_cols)
+    rows_deleted = csv_tbl.delete_by_template(tmp)
+    print("Rows deleted = ", rows_deleted)
+
+    res = csv_tbl.find_by_template(tmp, fields)
+    print("Query result should be empty: \n", json.dumps(res, indent=2))  # Again, use assert
+
 
 t_load()
 t_find_by_template()
 t_find_by_primary_key()
+t_delete_by_template()
