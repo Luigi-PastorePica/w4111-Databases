@@ -117,7 +117,7 @@ class CSVDataTable(BaseDataTable):
 
         # If len(key_fields) != len(self.key_columns), don't bother trying to match by primary key.
         # This will raise an exception if lengths do not match. It will do nothing otherwise
-        self.check_key_fields_length(key_fields)
+        self._check_key_fields_length(key_fields)
 
         template = self._generate_template(key_fields)
 
@@ -146,7 +146,7 @@ class CSVDataTable(BaseDataTable):
 
         return template
 
-    def check_key_fields_length(self, key_fields):
+    def _check_key_fields_length(self, key_fields):
         key_columns = self._data.get("key_columns")
         # Number of key fields should match number of key columns
         if len(key_fields) != len(key_columns):
