@@ -140,7 +140,8 @@ def t_find_by_primary_key():
 
     print("Query result (key without match) = \n", json.dumps(res, indent=2))
 
-    print("Query result (no template) = \n", json.dumps(res, indent=2))
+#    What is this doing here? Probably a result from copy paste.
+#    print("Query result (no template) = \n", json.dumps(res, indent=2))
 
 
 def t_delete_by_template():

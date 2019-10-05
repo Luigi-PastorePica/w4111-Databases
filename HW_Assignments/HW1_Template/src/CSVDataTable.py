@@ -113,21 +113,13 @@ class CSVDataTable(BaseDataTable):
             by the key.
         """
 
-        # if field list is none, return the whole row.
+        # Idea: if field list is None, return the whole row. For now, this is not the behavior of this method
 
-        key_columns = self._data.get("key_columns")
+        # If len(key_fields) != len(self.key_columns), don't bother trying to match by primary key.
+        # This will raise an exception if lengths do not match. It will do nothing otherwise
+        self.check_key_fields_length(key_fields)
 
-        # Number of key fields should match number of key columns
-        if len(key_fields) != len(key_columns):
-            key_length_mismatch_exception = 'len(key_fields) should match len(key_columns). {} != {}'
-            raise Exception(key_length_mismatch_exception.format(len(key_fields), len(key_columns)))
-
-        # Generates a template from key_columns and key_fields
-        template = {}
-        for field_pos in range(len(key_fields)):
-            column = key_columns[field_pos]
-            field = key_fields[field_pos]
-            template[column] = field
+        template = self._generate_template(key_fields)
 
         results = self.find_by_template(template, field_list)
 
@@ -138,6 +130,28 @@ class CSVDataTable(BaseDataTable):
         else:
             raise LookupError('Found more than one record with key {} : \n {}'.format(key_fields,
                                                                                       json.dumps(results, indent=2)))
+
+    def _generate_template(self, key_fields):
+        """
+        Generates a template from key_columns and key_fields
+
+        :param key_fields: The list with the values for the key_columns, in order, to use to find a record.
+        """
+        template = {}
+        key_columns = self._data.get("key_columns")
+        for field_pos in range(len(key_fields)):
+            column = key_columns[field_pos]
+            field = key_fields[field_pos]
+            template[column] = field
+
+        return template
+
+    def check_key_fields_length(self, key_fields):
+        key_columns = self._data.get("key_columns")
+        # Number of key fields should match number of key columns
+        if len(key_fields) != len(key_columns):
+            key_length_mismatch_exception = 'len(key_fields) should match len(key_columns). {} != {}'
+            raise ValueError(key_length_mismatch_exception.format(len(key_fields), len(key_columns)))
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
         """
