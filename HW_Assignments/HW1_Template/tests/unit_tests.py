@@ -166,7 +166,28 @@ def t_delete_by_template():
     print("Query result should be empty: \n", json.dumps(res, indent=2))  # Again, use assert
 
 
+def t_delete_by_key():
+
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "People.csv"
+    }
+
+    key_cols = ['nameGiven', 'retroID', 'bbrefID']
+    key_fields = ['Theodore Samuel', 'willt103', 'willite01']
+
+    csv_tbl = CSVDataTable("trimmed table", connect_info, key_columns=key_cols)
+
+    rows_deleted = csv_tbl.delete_by_key(key_fields)
+
+    print("Rows deleted = ", rows_deleted)
+
+    res = csv_tbl.find_by_primary_key(key_fields)
+    print("Query result should be null: \n", json.dumps(res, indent=2))  # Again, use assert
+
+
 t_load()
 t_find_by_template()
 t_find_by_primary_key()
 t_delete_by_template()
+t_delete_by_key()

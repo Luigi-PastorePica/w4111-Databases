@@ -187,7 +187,16 @@ class CSVDataTable(BaseDataTable):
         :param key_fields: Keys used to find row to be deleted.
         :return: A count of the rows deleted.
         """
-        pass
+
+        # If len(key_fields) != len(self.key_columns), don't bother trying to match by primary key.
+        # This will raise an exception if lengths do not match. It will do nothing otherwise
+        self._check_key_fields_length(key_fields)
+
+        template = self._generate_template(key_fields)
+
+        rows_deleted = self.delete_by_template(template)
+
+        return rows_deleted
 
     def delete_by_template(self, template):
         """
