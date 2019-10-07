@@ -200,7 +200,6 @@ class CSVDataTable(BaseDataTable):
 
     def delete_by_template(self, template):
         """
-
         :param template: Template to determine rows to delete.
         :return: Number of rows deleted.
         """
@@ -219,15 +218,23 @@ class CSVDataTable(BaseDataTable):
 
     def update_by_key(self, key_fields, new_values):
         """
-
         :param key_fields: List of value for the key fields.
         :param new_values: A dict of field:value to set for updated row.
         :return: Number of rows updated.
         """
 
+        # If len(key_fields) != len(self.key_columns), don't bother trying to match by primary key.
+        # This will raise an exception if lengths do not match. It will do nothing otherwise
+        self._check_key_fields_length(key_fields)
+
+        template = self._generate_template(key_fields)
+
+        rows_updated = self.update_by_template(template, new_values)
+
+        return rows_updated  # something not working. either the test or the method.
+
     def update_by_template(self, template, new_values):
         """
-
         :param template: Template for rows to match.
         :param new_values: New values to set for matching fields.
         :return: Number of rows updated.
@@ -239,10 +246,9 @@ class CSVDataTable(BaseDataTable):
             if self.matches_template(row, template):
                 for field in new_values:
                     row[field] = new_values[field]
-            rows_updated += 1
+                rows_updated += 1
 
         return rows_updated
-
 
     def insert(self, new_record):
         """

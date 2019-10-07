@@ -198,9 +198,9 @@ def t_update_by_template():
     tmp_old = {'teamID': 'BOS', 'yearID': '1960'}
     tmp_new = {'teamID': 'BOS1', 'yearID': '1960'}
 
-    csv_tbl = CSVDataTable("updated table", connect_info, key_columns=key_cols)
+    csv_tbl = CSVDataTable("updated table", connect_info, key_cols)
 
-    rows_updated = csv_tbl.update_by_template(tmp_old, new_values=new_vals)
+    rows_updated = csv_tbl.update_by_template(tmp_old, new_vals)
 
     print("Rows updated = ", rows_updated)  # Use assertion
 
@@ -213,7 +213,30 @@ def t_update_by_template():
 
 def t_update_by_key():
 
-    pass
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "People.csv"
+    }
+
+    key_cols = ['nameGiven', 'retroID', 'bbrefID']
+    new_vals = {'nameGiven': 'Theodore S.', 'weight': '204'}
+    key_fields = ['Theodore Samuel', 'willt103', 'willite01']
+    new_key_fields = ['Theodore S.', 'willt103', 'willite01']
+
+    csv_tbl = CSVDataTable("trimmed table", connect_info, key_cols)
+
+    res = csv_tbl.find_by_primary_key(key_fields)
+    print("Query result: \n", json.dumps(res, indent=2))  # Again, use assert
+
+    rows_updated = csv_tbl.update_by_key(key_fields, new_vals)
+
+    print("Rows updated = ", rows_updated)  # Use assertion
+
+    res = csv_tbl.find_by_primary_key(key_fields)
+    print("Query result using old values should be null: \n", json.dumps(res, indent=2))  # Again, use assert
+
+    res = csv_tbl.find_by_primary_key(new_key_fields)
+    print("Query result using new values: \n", json.dumps(res, indent=2))  # Again, use assert
 
 
 def t_insert():
@@ -232,3 +255,4 @@ t_find_by_primary_key()
 t_delete_by_template()
 t_delete_by_key()
 t_update_by_template()
+t_update_by_key()
