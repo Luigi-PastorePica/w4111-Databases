@@ -160,10 +160,10 @@ def t_delete_by_template():
 
     csv_tbl = CSVDataTable("trimmed table", connect_info, key_cols)
     rows_deleted = csv_tbl.delete_by_template(tmp)
-    print("Rows deleted = ", rows_deleted)
+    print("Rows deleted = ", rows_deleted)  # Use assertion
 
     res = csv_tbl.find_by_template(tmp, fields)
-    print("Query result should be empty: \n", json.dumps(res, indent=2))  # Again, use assert
+    print("Query result should be empty: \n", json.dumps(res, indent=2))  # Again, use assertion
 
 
 def t_delete_by_key():
@@ -180,10 +180,50 @@ def t_delete_by_key():
 
     rows_deleted = csv_tbl.delete_by_key(key_fields)
 
-    print("Rows deleted = ", rows_deleted)
+    print("Rows deleted = ", rows_deleted) # Use assertion
 
     res = csv_tbl.find_by_primary_key(key_fields)
     print("Query result should be null: \n", json.dumps(res, indent=2))  # Again, use assert
+
+
+def t_update_by_template():
+
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "Batting.csv"
+    }
+
+    key_cols = ['playerID', 'teamID', 'yearID', 'stint']
+    new_vals = {'teamID': 'BOS1', 'IBB': '0', 'HBP': '0', 'SH': '0', 'SF': '0'}
+    tmp_old = {'teamID': 'BOS', 'yearID': '1960'}
+    tmp_new = {'teamID': 'BOS1', 'yearID': '1960'}
+
+    csv_tbl = CSVDataTable("updated table", connect_info, key_columns=key_cols)
+
+    rows_updated = csv_tbl.update_by_template(tmp_old, new_values=new_vals)
+
+    print("Rows updated = ", rows_updated)  # Use assertion
+
+    res = csv_tbl.find_by_template(tmp_old)
+    print("Query result should be null: \n", json.dumps(res, indent=2))  # Again, use assertion
+
+    res = csv_tbl.find_by_template(tmp_new)
+    print("Query result: \n", json.dumps(res, indent=2))  # Again, use assertion
+
+
+def t_update_by_key():
+
+    pass
+
+
+def t_insert():
+
+    pass
+
+
+def t_save():
+
+    pass
 
 
 t_load()
@@ -191,3 +231,4 @@ t_find_by_template()
 t_find_by_primary_key()
 t_delete_by_template()
 t_delete_by_key()
+t_update_by_template()

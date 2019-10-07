@@ -232,7 +232,17 @@ class CSVDataTable(BaseDataTable):
         :param new_values: New values to set for matching fields.
         :return: Number of rows updated.
         """
-        pass
+
+        rows_updated = 0
+
+        for row in self._rows:
+            if self.matches_template(row, template):
+                for field in new_values:
+                    row[field] = new_values[field]
+            rows_updated += 1
+
+        return rows_updated
+
 
     def insert(self, new_record):
         """
