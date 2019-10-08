@@ -93,6 +93,19 @@ class CSVDataTable(BaseDataTable):
         Write the information back to a file.
         :return: None
         """
+        dir_info = self._data["connect_info"].get("directory")
+        file_n = self._data["connect_info"].get("file_name")
+        full_name = os.path.join(dir_info, file_n)
+
+        with open(full_name, "w") as csv_file:
+            field_list = list(self._rows[0].keys())
+            csv_d_writer = csv.DictWriter(csv_file, fieldnames=field_list)
+            rows_written = 0
+            for row in self._rows:
+                csv_d_writer.writerow(row)
+                rows_written += 1
+
+        self._logger.debug("CSVDataTable.save: Wrote " + str(rows_written) + " rows to " + full_name)
 
     @staticmethod
     def matches_template(row, template):
@@ -260,6 +273,8 @@ class CSVDataTable(BaseDataTable):
         self._add_row(new_record)
         first_field = list(self._rows[0].keys())  # First key in a row (row is an ordered dictionary). See README.md
         self._rows = sorted(self._rows, key=itemgetter(first_field[0]))  # Sorts list. See README.md
+
+        return None
 
     def get_rows(self):
         return self._rows

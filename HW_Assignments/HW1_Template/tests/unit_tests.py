@@ -4,6 +4,7 @@
 from HW_Assignments.HW1_Template.src.CSVDataTable import CSVDataTable
 import logging
 import os
+import csv
 import json
 
 
@@ -180,7 +181,7 @@ def t_delete_by_key():
 
     rows_deleted = csv_tbl.delete_by_key(key_fields)
 
-    print("Rows deleted = ", rows_deleted) # Use assertion
+    print("Rows deleted = ", rows_deleted)  # Use assertion
 
     res = csv_tbl.find_by_primary_key(key_fields)
     print("Query result should be null: \n", json.dumps(res, indent=2))  # Again, use assert
@@ -248,14 +249,14 @@ def t_insert():
 
     key_cols = ['nameGiven', 'retroID', 'bbrefID']
     key_fields = ['Bilba Labingi', 'midget01', 'baggbil01']
-    new_record = {'playerID':'baggbil01', 'birthYear':'2900', 'birthMonth':'01', 'birthDay':'02',
-                  'birthCountry':'Arnor', 'birthState':'The Shire', 'birthCity':'Hobbiton',
-                  'deathYear':'', 'deathMonth':'', 'deathDay':'',
-                  'deathCountry':'Aman', 'deathState':'', 'deathCity':'',
-                  'nameFirst':'Bilbo', 'nameLast':'Baggins', 'nameGiven':'Bilba Labingi',
-                  'weight':'', 'height':'', 'bats':'', 'throws':'',
-                  'debut':'', 'finalGame':'',
-                  'retroID':'midget01', 'bbrefID':'baggbil01'}
+    new_record = {'playerID': 'baggbil01', 'birthYear': '2900', 'birthMonth': '01', 'birthDay': '02',
+                  'birthCountry': 'Arnor', 'birthState': 'The Shire', 'birthCity': 'Hobbiton',
+                  'deathYear': '', 'deathMonth': '', 'deathDay': '',
+                  'deathCountry': 'Aman', 'deathState': '', 'deathCity': '',
+                  'nameFirst': 'Bilbo', 'nameLast': 'Baggins', 'nameGiven': 'Bilba Labingi',
+                  'weight': '', 'height': '', 'bats': '', 'throws': '',
+                  'debut': '', 'finalGame': '',
+                  'retroID': 'midget01', 'bbrefID': 'baggbil01'}
 
     csv_tbl = CSVDataTable("Expanded table", connect_info, key_columns=key_cols)
 
@@ -268,7 +269,47 @@ def t_insert():
 
 def t_save():
 
-    pass
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "People.csv"
+    }
+
+    connect_info_test = {
+        "directory": "./",
+        "file_name": "TestTable.csv"
+    }
+
+    key_cols = ['nameGiven', 'retroID', 'bbrefID']
+
+    dir_info = connect_info.get("directory")
+    file_n = connect_info.get("file_name")
+    full_name = os.path.join(dir_info, file_n)
+
+    dir_info_test = connect_info_test.get("directory")
+    file_n_test = connect_info_test.get("file_name")
+    full_name_test = os.path.join(dir_info_test, file_n_test)
+
+    truncate_step = 10
+    truncate_counter = 0
+    truncated_table = []
+
+    with open(full_name, "r") as original_file:
+        csv_d_rdr = csv.DictReader(original_file)
+        for row in csv_d_rdr:
+            if (truncate_counter % truncate_step) == 0:
+                truncated_table.append(row)
+            truncate_counter += 1
+
+    if not (os.path.exists(full_name_test) and os.path.isfile(full_name_test)):
+        with open(full_name_test, "w") as csv_file:
+            field_list = csv_d_rdr.fieldnames
+            csv_d_writer = csv.DictWriter(csv_file, fieldnames=field_list)
+            for row in truncated_table:
+                csv_d_writer.writerow(row)
+
+    csv_tbl = CSVDataTable("Test table", connect_info_test, key_columns=key_cols)
+
+    csv_tbl.save()
 
 
 t_load()
@@ -279,3 +320,4 @@ t_delete_by_key()
 t_update_by_template()
 t_update_by_key()
 t_insert()
+t_save()
