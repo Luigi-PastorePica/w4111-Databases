@@ -271,11 +271,11 @@ def t_save():
     pass
 
 
-# t_load()
-# t_find_by_template()
-# t_find_by_primary_key()
-# t_delete_by_template()
-# t_delete_by_key()
-# t_update_by_template()
-# t_update_by_key()
+t_load()
+t_find_by_template()
+t_find_by_primary_key()
+t_delete_by_template()
+t_delete_by_key()
+t_update_by_template()
+t_update_by_key()
 t_insert()

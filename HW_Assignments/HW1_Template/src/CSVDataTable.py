@@ -258,7 +258,7 @@ class CSVDataTable(BaseDataTable):
         """
 
         self._add_row(new_record)
-        first_field = list(self._rows[0].keys())  # First key in a row (row is an ordered dictionary). See README.txt
+        first_field = list(self._rows[0].keys())  # First key in a row (row is an ordered dictionary). See README.md
         self._rows = sorted(self._rows, key=itemgetter(first_field[0]))  # Sorts list. See README.md
 
     def get_rows(self):
