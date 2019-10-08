@@ -6,6 +6,7 @@ import logging
 import json
 import os
 import pandas as pd
+from operator import itemgetter
 
 pd.set_option("display.width", 256)
 pd.set_option('display.max_columns', 20)
@@ -252,11 +253,13 @@ class CSVDataTable(BaseDataTable):
 
     def insert(self, new_record):
         """
-
         :param new_record: A dictionary representing a row to add to the set of records.
         :return: None
         """
-        pass
+
+        self._add_row(new_record)
+        first_field = list(self._rows[0].keys())  # First key in a row (row is an ordered dictionary). See README.txt
+        self._rows = sorted(self._rows, key=itemgetter(first_field[0]))  # Sorts list. See README.md
 
     def get_rows(self):
         return self._rows

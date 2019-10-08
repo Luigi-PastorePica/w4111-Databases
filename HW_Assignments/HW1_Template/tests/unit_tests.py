@@ -241,7 +241,29 @@ def t_update_by_key():
 
 def t_insert():
 
-    pass
+    connect_info = {
+        "directory": data_dir,
+        "file_name": "People.csv"
+    }
+
+    key_cols = ['nameGiven', 'retroID', 'bbrefID']
+    key_fields = ['Bilba Labingi', 'midget01', 'baggbil01']
+    new_record = {'playerID':'baggbil01', 'birthYear':'2900', 'birthMonth':'01', 'birthDay':'02',
+                  'birthCountry':'Arnor', 'birthState':'The Shire', 'birthCity':'Hobbiton',
+                  'deathYear':'', 'deathMonth':'', 'deathDay':'',
+                  'deathCountry':'Aman', 'deathState':'', 'deathCity':'',
+                  'nameFirst':'Bilbo', 'nameLast':'Baggins', 'nameGiven':'Bilba Labingi',
+                  'weight':'', 'height':'', 'bats':'', 'throws':'',
+                  'debut':'', 'finalGame':'',
+                  'retroID':'midget01', 'bbrefID':'baggbil01'}
+
+    csv_tbl = CSVDataTable("Expanded table", connect_info, key_columns=key_cols)
+
+    csv_tbl.insert(new_record)
+
+    # Checks that the row was properly inserted in the self._rows instance variable.
+    res = csv_tbl.find_by_primary_key(key_fields)
+    print("Row inserted = ", json.dumps(res, indent=2))  # Use assertion
 
 
 def t_save():
@@ -249,10 +271,11 @@ def t_save():
     pass
 
 
-t_load()
-t_find_by_template()
-t_find_by_primary_key()
-t_delete_by_template()
-t_delete_by_key()
-t_update_by_template()
-t_update_by_key()
+# t_load()
+# t_find_by_template()
+# t_find_by_primary_key()
+# t_delete_by_template()
+# t_delete_by_key()
+# t_update_by_template()
+# t_update_by_key()
+t_insert()
