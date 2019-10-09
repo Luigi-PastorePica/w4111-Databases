@@ -303,7 +303,7 @@ def t_save():
     }
 
     connect_info_test = {
-        "directory": "./",
+        "directory": "./csv",
         "file_name": "TestTable.csv"
     }
 
@@ -342,10 +342,10 @@ def t_save():
 
 t_load()
 t_find_by_template()
-# t_find_by_primary_key()
-# t_delete_by_template()
-# t_delete_by_key()
-# t_update_by_template()
-# t_update_by_key()
-# t_insert()
-# t_save()
+t_find_by_primary_key()
+t_delete_by_template()
+t_delete_by_key()
+t_update_by_template()
+t_update_by_key()
+t_insert()
+t_save()
