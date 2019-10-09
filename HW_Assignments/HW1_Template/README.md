@@ -21,10 +21,16 @@ provided way to check the formatting of key_fields is correct, the function _che
 that the length of key_fields matches the length of self.data.key_columns and raises a ValueError in case the do not 
 match; in this way at least length mismatches can be easily identified. 
 
-CSVDataTable.insert(new_record), where new_record is a dictionary containing the key-value pairings for all the columns 
+insert(new_record), where new_record is a dictionary containing the key-value pairings for all the columns 
 of self._rows. The values can be '' (empty strings). This method simply appends the dictionary to the end of the list 
 self._rows. Then, it reorders the list based on the table's first column.
 
+_validate_template_and_fields(template, field_list) validates its arguments. The method creates a set containing all 
+column names of the CSVDataTable instance. Then, it also creates independent sets for the elements in template.keys() 
+and field_list. After that, it checks whether the smaller sets are a subset of the one containing all the columns of the 
+instance. This method is used in all _by_template methods to avoid the confusion that could be caused by potentially 
+more obscure errors raised by underlying modules. Code for this method was provided by Dr. Donal Ferguson (see notes 
+below)
 
 ### Notes on CSVDataTable.py:
 
@@ -43,6 +49,9 @@ https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-it
 
 The solution for properly representing a 1 row table using pandas.DataFrame comes from this post: 
 https://stackoverflow.com/questions/42202872/how-to-convert-list-to-row-dataframe-with-pandas
+
+_validate_template_and_fields() and its code were provided by Dr. Donald Ferguson in the Columbia CVN video 
+video_oh18sep_2019
 
 ---
 

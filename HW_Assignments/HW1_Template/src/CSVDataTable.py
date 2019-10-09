@@ -125,6 +125,8 @@ class CSVDataTable(BaseDataTable):
         This method makes sure that the keys in the template and the fields provided are actually column names of the
         CSVDataTable instance.
 
+        Code provided by Donald Ferguson, Ph.D.
+
         :param template: A template whose keys we want to validate
         :param field_list: A list of fields which we want to validate
         :return: True, Always.
