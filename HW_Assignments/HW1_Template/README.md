@@ -1,7 +1,7 @@
 # W4111_F19_HW1
 Implementation template for homework 1.
 
-How CSVDataTable works:
+## How CSVDataTable works:
 
 The methods ending in _by_template(template, ...) iterate over the entirety of the list self._rows looking to match the 
 pattern given in their respective template argument. In turn, the matching in each iteration is done by the method 
@@ -25,36 +25,62 @@ CSVDataTable.insert(new_record), where new_record is a dictionary containing the
 of self._rows. The values can be '' (empty strings). This method simply appends the dictionary to the end of the list 
 self._rows. Then, it reorders the list based on the table's first column.
 
+
+### Notes on CSVDataTable.py:
+
+CSVDataTable.insert() is highly inefficient at this point. It currently has to copy the entire contents of self._rows in 
+order to sort the table.
+
+find_by_template() looks a bit messy. I have left in the code a different, commented-out version of the function. This 
+alternate version does not work properly for an unknown reason; however, I left it because if it is made to work, I 
+think the code will be cleaner, more understandable and more maintainable.
+
 The idea of how to obtain the first element of an ordered dictionary comes from this post: 
 https://stackoverflow.com/questions/30362391/how-do-you-find-the-first-key-in-a-dictionary
 
 The idea to use operator.itemgetter() for sorting the self._rows list comes from this post:
 https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-itemgetter/
 
-Note that CSVDataTable.insert() is highly inefficient at this point. It currently has to copy the entire contents of 
-self._rows in order to sort the table.
+The solution for properly representing a 1 row table using pandas.DataFrame comes from this post: 
+https://stackoverflow.com/questions/42202872/how-to-convert-list-to-row-dataframe-with-pandas
 
-Unit Tests: 
+---
+
+## Unit Tests: 
 
 HW1_Template/tests/unit_tests.py
 
 Tests for:
 
-t_find_by_primary_key
-t_find_by_template
-t_delete_by_key
-t_delete_by_template
-t_update_by_key
-t_update_by_template
-t_insert
+- t_find_by_primary_key
+- t_find_by_template
+- t_delete_by_key
+- t_delete_by_template
+- t_update_by_key
+- t_update_by_template
+- t_insert
 
 Perform their operations on the copy of the CSV files temporarily held in memory when the program runs. As a result, no 
 changes are made to the original data table files.
 
 The test for:
 
-t_save
+- t_save
 
-saves the CSV table currently in memory into the data table (csv file) opened by the CSVDataTable object. For this 
-purpose, a smaller test table has been created in a CSV file called Csv_test.csv. 
+Saves the CSV table currently in memory into the data table (csv file) opened by the CSVDataTable object. 
 
+### Notes for unit_tests.py
+
+For the purpose of reducing time for iterations in the development of tests, a smaller test table has been created in a 
+CSV file called TestTable.csv, which is expected to be in the __tests__ directory. If the table does not exist, t_save 
+will create it and fill it with a reduced version of an already existing table. In this particular case, TestTable.csv 
+contains 1 out of every 10 records in People.csv.
+
+**Very Important:**
+
+If the table TestTable.csv exists, but it is empty, the program will produce an error. To prevent this error, there are 
+three options:
+1. Place csv formatted content in TestTable.csv
+2. Rename a copy of another csv formatted file to TestTable.csv (analogous to option 1)
+3. Remove (delete) TestTable.csv from the tests directory. When t_save is run again, it will then create a new 
+TestTable.csv file.
