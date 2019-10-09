@@ -69,7 +69,7 @@ def t_find_by_template():
     # print("Query result (no keys) = \n", json.dumps(res, indent=2))
     print("Query result (no keys) = \n", pd.DataFrame(res))
 
-    # Providing an empty set of fields should return an empty row for each row matched in the regular query above
+    # Providing an empty set of fields should return a full row for each row matched in the regular query above
     csv_tbl_no_fields = CSVDataTable("batting", connect_info, key_columns=key_cols)
 
     res = csv_tbl_no_fields.find_by_template(template=tmp, field_list=empty_fields)
@@ -342,10 +342,10 @@ def t_save():
 
 t_load()
 t_find_by_template()
-t_find_by_primary_key()
-t_delete_by_template()
-t_delete_by_key()
-t_update_by_template()
-t_update_by_key()
-t_insert()
-t_save()
+# t_find_by_primary_key()
+# t_delete_by_template()
+# t_delete_by_key()
+# t_update_by_template()
+# t_update_by_key()
+# t_insert()
+# t_save()

@@ -184,15 +184,41 @@ class CSVDataTable(BaseDataTable):
         # Too many nested flow control blocks.
         # Consider extracting into helper methods in order to adhere to single responsibility principle
         results = []
+        all_fields = list(self._rows[0].keys())
+
         for row in self._rows:
             if self.matches_template(row, template):
                 short_row = {}
-                if field_list is not None:
+                full_row = {}
+                if field_list is not None and len(field_list) > 0:
                     for field in field_list:
                         short_row[field] = row.get(field)
                     results.append(short_row)
+
                 else:
-                    results.append(row)
+                    for field in all_fields:
+                        full_row[field] = row.get(field)
+                    results.append(full_row)
+
+        # This version of this function does not work, but I do not know the reason.
+        # I will leave it here because if it is made to produce the appropriate results, the code will much more
+        # understandable, clean and maintainable.
+        # if field_list is not None and len(field_list) > 0:
+        #     short_row = {}
+        #     for row in self._rows:
+        #         if self.matches_template(row, template):
+        #             for field in field_list:
+        #                 short_row[field] = row.get(field)
+        #             results.append(short_row)
+        #
+        # else:
+        #     full_row = {}
+        #     for row in self._rows:
+        #         if self.matches_template(row, template):
+        #             for field in all_fields:
+        #                 full_row[field] = row.get(field)
+        #             results.append(full_row)
+
         return results
 
     def delete_by_key(self, key_fields):
