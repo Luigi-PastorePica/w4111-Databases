@@ -142,8 +142,10 @@ class CSVDataTable(BaseDataTable):
         elif len(results) == 1:
             return results.pop()  # results is a list of dictionaries
         else:
+            # raise LookupError('Found more than one record with key {} : \n {}'.format(key_fields,
+            #                                                                           json.dumps(results, indent=2)))
             raise LookupError('Found more than one record with key {} : \n {}'.format(key_fields,
-                                                                                      json.dumps(results, indent=2)))
+                                                                                      pd.DataFrame(results)))
 
     def _generate_template(self, key_fields):
         """
@@ -270,10 +272,34 @@ class CSVDataTable(BaseDataTable):
         :return: None
         """
 
-        self._add_row(new_record)
-        first_field = list(self._rows[0].keys())  # First key in a row (row is an ordered dictionary). See README.md
-        self._rows = sorted(self._rows, key=itemgetter(first_field[0]))  # Sorts list. See README.md
+        duplicate = False
+        try:
+            self._check_for_duplicates(new_record)
+        except ValueError as ve:
+            duplicate = True
+            print(ve, "The duplicate record will not be inserted")
 
+        if duplicate is False:
+            self._add_row(new_record)
+            first_field = list(self._rows[0].keys())  # First key in a row (row is an ordered dictionary). See README.md
+            self._rows = sorted(self._rows, key=itemgetter(first_field[0]))  # Sorts list by first field. See README.md
+
+        return None
+
+    def _check_for_duplicates(self, new_record):
+        """
+        :param new_record: A dictionary containing the new record that must be checked against the exiting table
+        :return: None
+        """
+        key_values = []
+        for key in self._data['key_columns']:
+            key_values.append(new_record[key])
+
+        res = self.find_by_primary_key(key_fields=key_values)
+        if res is not None:
+            template = self._generate_template(key_values)
+            raise ValueError("A record with the same key already exists.\n"
+                             "Duplicate Key: {}\n".format(template))
         return None
 
     def get_rows(self):
