@@ -119,6 +119,37 @@ class CSVDataTable(BaseDataTable):
 
         return result
 
+    def _validate_template_and_fields(self, template, field_list=None):
+        """
+
+        This method makes sure that the keys in the template and the fields provided are actually column names of the
+        CSVDataTable instance.
+
+        :param template: A template whose keys we want to validate
+        :param field_list: A list of fields which we want to validate
+        :return: True, Always.
+        """
+
+        c_set = set(list(self._rows[0].keys()))
+
+        if template is not None:
+            t_set = set(template.keys())
+        else:
+            t_set = None
+
+        if field_list is not None:
+            f_set = set(field_list)
+        else:
+            f_set = None
+
+        if f_set is not None and not f_set.issubset(c_set):
+            raise ValueError("One or more fields from {} are invalid.".format(f_set))
+
+        if t_set is not None and not t_set.issubset(c_set):
+            raise ValueError("One or more fields from {} are invalid.".format(t_set))
+
+        return True
+
     def find_by_primary_key(self, key_fields, field_list=None):
         """
         :param key_fields: The list with the values for the key_columns, in order, to use to find a record.
@@ -171,7 +202,6 @@ class CSVDataTable(BaseDataTable):
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
         """
-
         :param template: A dictionary of the form { "field1" : value1, "field2": value2, ...}
         :param field_list: A list of request fields of the form, ['fielda', 'fieldb', ...]
         :param limit: Do not worry about this for now.
@@ -181,11 +211,12 @@ class CSVDataTable(BaseDataTable):
             that matches the template. The dictionary only contains the requested fields.
         """
 
-        # Too many nested flow control blocks.
-        # Consider extracting into helper methods in order to adhere to single responsibility principle
+        self._validate_template_and_fields(template, field_list)
         results = []
         all_fields = list(self._rows[0].keys())
 
+        # Too many nested flow control blocks.
+        # Consider extracting into helper methods in order to adhere to single responsibility principle
         for row in self._rows:
             if self.matches_template(row, template):
                 short_row = {}
@@ -245,6 +276,8 @@ class CSVDataTable(BaseDataTable):
         :param template: Template to determine rows to delete.
         :return: Number of rows deleted.
         """
+
+        self._validate_template_and_fields(template)
         rows_deleted = 0
         row_index = 0
 
@@ -282,6 +315,7 @@ class CSVDataTable(BaseDataTable):
         :return: Number of rows updated.
         """
 
+        self._validate_template_and_fields(template)
         rows_updated = 0
 
         for row in self._rows:

@@ -349,3 +349,5 @@ t_update_by_template()
 t_update_by_key()
 t_insert()
 t_save()
+
+print("\n-------END OF UNIT TESTS -------\n")
