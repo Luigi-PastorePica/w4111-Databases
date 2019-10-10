@@ -1,3 +1,13 @@
+"""
+Programmer: Luigi A. Pastore Pica
+UNI: lap2204
+Template code provided by Donald F. Ferguson, Ph.D.
+
+This file contains the class CSVDataTable, which loads a CSV file into memory as a table and performs RDB-like
+operations on such table's data. The code also allows for saving of the changes back into the original CSV file, making
+this a simple but competent (yet not very efficient) implementation of a database.
+"""
+
 
 from HW_Assignments.HW1_Template.src.BaseDataTable import BaseDataTable
 import copy

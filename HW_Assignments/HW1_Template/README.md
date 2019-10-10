@@ -3,39 +3,48 @@ Implementation template for homework 1.
 
 ## How CSVDataTable works:
 
-The methods ending in _by_template(template, ...) iterate over the entirety of the list self._rows looking to match the 
+- The methods ending in _by_template(template, ...) iterate over the entirety of the list self._rows looking to match the 
 pattern given in their respective template argument. In turn, the matching in each iteration is done by the method 
 matches_template(row, template) 
 
-matches_template(row, template), where row and template are dictionaries, iterates over the elements of row looking for 
+- matches_template(row, template), where row and template are dictionaries, iterates over the elements of row looking for 
 key-value matches with template.
 
-The methods ending in _by_primary_key(key_fields, ...) and _by_key(key_fields, ...) internally use their _by_template 
+- The methods ending in _by_primary_key(key_fields, ...) and _by_key(key_fields, ...) internally use their _by_template 
 counterparts for matching. The _generate_template(key_fields) method returns a template that can then be used as an 
 argument for the corresponding _by_template method. 
 
-_generate_template(key_fields) uses the key_fields argument (a list of key values) and the CSVDataTable object's 
+- _generate_template(key_fields) uses the key_fields argument (a list of key values) and the CSVDataTable object's 
 instance variable self.data.key_columns (a list of the columns that comprise the primary key for the table) to generate 
 a dictionary. The dictionary generated is returned and it can be used as a template for a query. While there is no 
 provided way to check the formatting of key_fields is correct, the function _check_key_fields_length(key_fields) checks 
 that the length of key_fields matches the length of self.data.key_columns and raises a ValueError in case the do not 
 match; in this way at least length mismatches can be easily identified. 
 
-insert(new_record), where new_record is a dictionary containing the key-value pairings for all the columns 
-of self._rows. The values can be '' (empty strings). This method simply appends the dictionary to the end of the list 
-self._rows. Then, it reorders the list based on the table's first column.
+- insert(new_record), where new_record is a dictionary containing the key-value pairings for all the columns of 
+self._rows. The values can be '' (empty strings). This method simply appends the dictionary to the end of the list 
+self._rows. Then, it reorders the list based on the table's first column. Please note that **trying to insert a record 
+with a primary key (key_columns) that is already present in the table will not work**. The method will print a warning 
+and the new record will be discarded.
 
-_validate_template_and_fields(template, field_list) validates its arguments. The method creates a set containing all 
+- _validate_template_and_fields(template, field_list) validates its arguments. The method creates a set containing all 
 column names of the CSVDataTable instance. Then, it also creates independent sets for the elements in template.keys() 
 and field_list. After that, it checks whether the smaller sets are a subset of the one containing all the columns of the 
 instance. This method is used in all _by_template methods to avoid the confusion that could be caused by potentially 
 more obscure errors raised by underlying modules. Code for this method was provided by Dr. Donal Ferguson (see notes 
 below)
 
+_check_for_duplicates(new_record) checks the entire table in the calling CSVDataTable instance for primary key 
+duplicates.
+
 ### Notes on CSVDataTable.py:
 
-CSVDataTable.insert() is highly inefficient at this point. It currently has to copy the entire contents of self._rows in 
+insert() is highly inefficient at this point. It currently has to copy the entire contents of self._rows in 
 order to sort the table.
+
+_check_for_duplicates() is only used in insert(). Because of the current implementation of the class (no indexing), 
+using this method in _load() or add_rows() would be highly inefficient. Therefore, it is assumed that the CSV file being 
+imported into the CSVDataTable instance has no primary key (key_columns) duplicates.
 
 find_by_template() looks a bit messy. I have left in the code a different, commented-out version of the function. This 
 alternate version does not work properly for an unknown reason; however, I left it because if it is made to work, I 
@@ -57,7 +66,7 @@ video_oh18sep_2019
 
 ## Unit Tests: 
 
-HW1_Template/tests/unit_tests.py
+HW1_Template/tests/csv_table_tests.py
 
 Tests for:
 
@@ -78,7 +87,7 @@ The test for:
 
 Saves the CSV table currently in memory into the data table (csv file) opened by the CSVDataTable object. 
 
-### Notes for unit_tests.py
+### Notes for csv_table_tests.py
 
 For the purpose of reducing time for iterations in the development of tests, a smaller test table has been created in a 
 CSV file called TestTable.csv, which is expected to be in the __tests__ directory. If the table does not exist, t_save 
