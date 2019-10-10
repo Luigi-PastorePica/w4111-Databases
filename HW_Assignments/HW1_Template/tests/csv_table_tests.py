@@ -1,17 +1,19 @@
-# IMPORTANT:    This document is being deprecated.
-#               The tests in this document are mostly intended for CSVDataTable. Because of this, the functional code
-#               from this document has been moved to csv_table_tests.py and ALL improvements to unit test code for
-#               CSVDataTable will be done there. As a result, the tests in this document will be
-#               eventually removed in a future commit and unit_tests.py should NOT be used going forward.
-#
-# I write and test methods one at a time.
-# This file contains unit tests of individual methods.
+"""
+Programmer: Luigi A. Pastore Pica
+UNI: lap2204
+Template code provided by Donald F. Ferguson, Ph.D.
+
+This file contains unit tests of individual methods in CSVDataTable.
+
+The code is very similar, but not identical, to unit_tests.py. Going forward, please use this test instead as all
+future development of unit tests for CSVDataTable will be made on this document.
+"""
+
 
 from HW_Assignments.HW1_Template.src.CSVDataTable import CSVDataTable
 import logging
 import os
 import csv
-import json
 import pandas as pd
 
 # Using pandas will make the output more readable.
@@ -64,7 +66,6 @@ def t_find_by_template():
 
     res = csv_tbl.find_by_template(template=tmp, field_list=fields)
 
-    # print("Query result (regular) = \n", json.dumps(res, indent=2))
     print("Query result (regular) = \n", pd.DataFrame(res))
 
     # Providing no keys should return the same as the regular query above
@@ -72,7 +73,6 @@ def t_find_by_template():
 
     res = csv_tbl_no_keys.find_by_template(template=tmp, field_list=fields)
 
-    # print("Query result (no keys) = \n", json.dumps(res, indent=2))
     print("Query result (no keys) = \n", pd.DataFrame(res))
 
     # Providing an empty set of fields should return a full row for each row matched in the regular query above
@@ -80,7 +80,6 @@ def t_find_by_template():
 
     res = csv_tbl_no_fields.find_by_template(template=tmp, field_list=empty_fields)
 
-    # print("Query result (empty fields list) = \n", json.dumps(res, indent=2))
     print("Query result (empty fields list) = \n", pd.DataFrame(res))
 
     # Providing no fields should return the fields in all columns for each row matched in the regular query above
@@ -88,17 +87,12 @@ def t_find_by_template():
 
     res = csv_tbl_no_fields.find_by_template(template=tmp)
 
-    # print("Query result (no field list provided) = \n", json.dumps(res, indent=2))
     print("Query result (no field list provided) = \n", pd.DataFrame(res))
 
     # Providing an empty template should return all of the rows in the table
     csv_tbl_no_template = CSVDataTable("batting", connect_info, key_columns=key_cols)
 
     res = csv_tbl_no_template.find_by_template(template=empty_tmp, field_list=fields)
-
-    # res_last_elem = len(res) - 1
-    # print("Query result (no template) = \n", json.dumps(res[0:rows_to_show], indent=2), "\n\n***\n***\n***\n\n",
-    #       json.dumps(res[res_last_elem - rows_to_show:res_last_elem], indent=2))
 
     res_last_elem = len(res) - 1
     pre_second_to_last_index = res_last_elem - rows_to_show
@@ -133,7 +127,6 @@ def t_find_by_primary_key():
 
     res = csv_tbl.find_by_primary_key(keys_single, fields)
 
-    # print("Query result (single key) = \n", json.dumps(res, indent=2))
     print("Query result (single key) = \n", pd.DataFrame([res]))
 
     # A proper key set is unique
@@ -141,7 +134,6 @@ def t_find_by_primary_key():
 
     res = csv_tbl.find_by_primary_key(keys_multi, fields)
 
-    # print("Query result (multi-field key) = \n", json.dumps(res, indent=2))
     print("Query result (multi-field key) = \n", pd.DataFrame([res]))
 
     # This improper "key" should produce an exception, since it will return multiple results (i.e. not a proper key)
@@ -154,7 +146,6 @@ def t_find_by_primary_key():
         print("Query result (wrongly chosen key(s)) = \n{}".format(str(tooMany)))
     else:
         # Consider using an Assertion instead
-        # print("There should have been a LookupError. Result = ", json.dumps(res, indent=2))
         print("There should have been a LookupError. Result = ", pd.DataFrame(res))
         print("TEST FAILED!")
 
@@ -163,7 +154,6 @@ def t_find_by_primary_key():
 
     res = csv_tbl.find_by_primary_key(keys_no_match, fields)
 
-    # print("Query result (key without match) = \n", json.dumps(res, indent=2))
     print("Query result (key without match) = \n", pd.DataFrame([res]))
 
 
@@ -186,7 +176,6 @@ def t_delete_by_template():
     print("Rows deleted = ", rows_deleted)  # Use assertion
 
     res = csv_tbl.find_by_template(tmp, fields)
-    # print("Query result should be empty: \n", json.dumps(res, indent=2))  # Again, use assertion
     print("Query result using the same template should be empty: \n", pd.DataFrame([res]))  # Again, use assertion
 
 
@@ -207,7 +196,7 @@ def t_delete_by_key():
     print("Rows deleted = ", rows_deleted)  # Use assertion
 
     res = csv_tbl.find_by_primary_key(key_fields)
-    # print("Query result should be null: \n", json.dumps(res, indent=2))  # Again, use assert
+
     print("Query result using the same key should be empty: \n", pd.DataFrame([res]))  # Again, use assert
 
 
@@ -230,11 +219,11 @@ def t_update_by_template():
     print("Rows updated = ", rows_updated)  # Use assertion
 
     res = csv_tbl.find_by_template(tmp_old)
-    # print("Query result should be null: \n", json.dumps(res, indent=2))  # Again, use assertion
+
     print("Query result with old template should be empty: \n", pd.DataFrame([res]))  # Again, use assertion
 
     res = csv_tbl.find_by_template(tmp_new)
-    # print("Query result: \n", json.dumps(res, indent=2))  # Again, use assertion
+
     print("Query result with new template: \n", pd.DataFrame(res))  # Again, use assertion
 
 
@@ -253,7 +242,7 @@ def t_update_by_key():
     csv_tbl = CSVDataTable("trimmed table", connect_info, key_cols)
 
     res = csv_tbl.find_by_primary_key(key_fields)
-    # print("Query result: \n", json.dumps(res, indent=2))  # Again, use assertion
+
     print("Query result: \n", pd.DataFrame([res]))  # Again, use assert
 
     rows_updated = csv_tbl.update_by_key(key_fields, new_vals)
@@ -261,11 +250,11 @@ def t_update_by_key():
     print("Rows updated = ", rows_updated)  # Use assertion
 
     res = csv_tbl.find_by_primary_key(key_fields)
-    # print("Query result using old values should be null: \n", json.dumps(res, indent=2))  # Again, use assert
+
     print("Query result using old values should be empty: \n", pd.DataFrame([res]))  # Again, use assert
 
     res = csv_tbl.find_by_primary_key(new_key_fields)
-    # print("Query result using new values: \n", json.dumps(res, indent=2))  # Again, use assert
+
     print("Query result using new values {}: \n".format(new_vals), pd.DataFrame([res]))  # Again, use assert
 
 
@@ -297,7 +286,7 @@ def t_insert():
     # Checks that the row was properly inserted in the self._rows instance variable.
     # In addition, if a duplicate was inserted, find_by_primary_key() would raise a LookupError.
     res = csv_tbl.find_by_primary_key(key_fields)
-    # print("Row inserted = ", json.dumps(res, indent=2))  # Use assertion
+
     print("Row inserted = \n", pd.DataFrame([res], columns=res.keys()))  # Use assertion
 
 
