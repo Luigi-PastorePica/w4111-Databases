@@ -298,7 +298,7 @@ def t_save():
     }
 
     connect_info_test = {
-        "directory": "./csv",
+        "directory": "./csv_files",
         "file_name": "TestTable.csv"
     }
 

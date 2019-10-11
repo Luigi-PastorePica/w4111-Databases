@@ -2,18 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b12d6f8e-1e9c-409f-b507-d967c9fcb1fd" name="Default" comment="Cleaned up the directory.">
-      <change afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv_table_tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/dbutils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv_files/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/rdb_table_tests.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/rdb_table_tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/CSVDataTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/CSVDataTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv/TestTable.csv" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv/TestTable.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/unit_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/unit_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Examples/SQLHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Examples/SQLHelper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/RDBDataTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/RDBDataTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv/TestTable.csv" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv_files/TestTable.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv_table_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv_table_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/csv_table_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/csv_table_test.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="w4111-Databases" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -45,19 +53,21 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/Old" />
-      <recent name="$PROJECT_DIR$/Slides" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\dferguso\ansys_one_drive\Columbia\W4111f19\w4111-Databases\Data\lahman2019" />
       <recent name="$PROJECT_DIR$/Images" />
       <recent name="$PROJECT_DIR$/Lectures/Lecture_1" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests" />
+      <recent name="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/Old" />
+      <recent name="$PROJECT_DIR$/Slides" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -72,7 +82,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.csv_table_tests">
+  <component name="RunManager" selected="Python.rdb_table_tests">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -129,28 +139,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="csv_dir_to_sql" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="w4111-Databases" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Examples" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Examples/csv_dir_to_sql.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="csv_table_tests" type="PythonConfigurationType" factoryName="Python" temporary="true" show_console_on_std_err="true" show_console_on_std_out="true">
       <output_file path="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/csv_table_test.txt" is_save="true" />
       <module name="w4111-Databases" />
@@ -166,6 +154,29 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/csv_table_tests.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="rdb_table_tests" type="PythonConfigurationType" factoryName="Python" temporary="true" show_console_on_std_err="true" show_console_on_std_out="true">
+      <output_file path="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/rdb_table_tests.txt" is_save="true" />
+      <module name="w4111-Databases" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/rdb_table_tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -230,18 +241,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.CSVDataTable" />
-      <item itemvalue="Python.csv_dir_to_sql" />
       <item itemvalue="Python.test_helper" />
       <item itemvalue="Python.unit_tests" />
       <item itemvalue="Python.csv_table_tests" />
+      <item itemvalue="Python.rdb_table_tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.rdb_table_tests" />
         <item itemvalue="Python.csv_table_tests" />
         <item itemvalue="Python.unit_tests" />
         <item itemvalue="Python.CSVDataTable" />
         <item itemvalue="Python.test_helper" />
-        <item itemvalue="Python.csv_dir_to_sql" />
       </list>
     </recent_temporary>
   </component>
@@ -277,6 +288,9 @@
       <workItem from="1570398838004" duration="35437000" />
       <workItem from="1570578698866" duration="18855000" />
       <workItem from="1570673755884" duration="4587000" />
+      <workItem from="1570740279907" duration="610000" />
+      <workItem from="1570767244619" duration="2020000" />
+      <workItem from="1570769513193" duration="1680000" />
     </task>
     <task id="LOCAL-00001" summary="Moved content">
       <created>1545233951773</created>
@@ -372,7 +386,8 @@
     <SUITE FILE_PATH="coverage/w4111_Databases$csv_dir_to_sql.coverage" NAME="csv_dir_to_sql Coverage Results" MODIFIED="1565635349464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Examples" />
     <SUITE FILE_PATH="coverage/w4111_Databases$CSVDataTable.coverage" NAME="CSVDataTable Coverage Results" MODIFIED="1569950150292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/src" />
     <SUITE FILE_PATH="coverage/w4111_Databases$unit_tests.coverage" NAME="unit_tests Coverage Results" MODIFIED="1570661333172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests" />
-    <SUITE FILE_PATH="coverage/w4111_Databases$csv_table_tests.coverage" NAME="csv_table_tests Coverage Results" MODIFIED="1570724902375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests" />
+    <SUITE FILE_PATH="coverage/w4111_Databases$csv_table_tests.coverage" NAME="csv_table_tests Coverage Results" MODIFIED="1570770626923" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests" />
     <SUITE FILE_PATH="coverage/w4111_Databases$test_helper.coverage" NAME="test_helper Coverage Results" MODIFIED="1565809298574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Examples" />
+    <SUITE FILE_PATH="coverage/w4111_Databases$rdb_table_tests.coverage" NAME="rdb_table_tests Coverage Results" MODIFIED="1570771875999" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs" />
   </component>
 </project>

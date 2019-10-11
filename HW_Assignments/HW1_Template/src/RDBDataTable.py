@@ -1,5 +1,11 @@
 from HW_Assignments.HW1_Template.src.BaseDataTable import BaseDataTable
-import pymysql
+import HW_Assignments.HW1_Template.src.dbutils as dbutils
+import json
+import pandas as pd
+
+pd.set_option("display.width", 196)
+pd.set_option('display.max_columns', 16)
+
 
 class RDBDataTable(BaseDataTable):
 
@@ -15,7 +21,48 @@ class RDBDataTable(BaseDataTable):
         :param connect_info: Dictionary of parameters necessary to connect to the data.
         :param key_columns: List, in order, of the columns (fields) that comprise the primary key.
         """
-        pass
+        if table_name is None or connect_info is None:
+            raise ValueError("Invalid input.")
+
+        self._data = {
+            "table_name": table_name,
+            "connect_info": connect_info,
+            "key_columns": key_columns
+        }
+
+        cnx = dbutils.get_connection(connect_info)
+        if cnx is not None:
+            self._cnx = cnx
+        else:
+            raise Exception("Could not get a connection.")
+
+    def __str__(self):
+
+        result = "RDBDataTable:\n"
+        result += json.dumps(self._data, indent=2)
+
+        row_count = self.get_row_count()
+        result += "\nNumber of rows = " + str(row_count)
+
+        some_rows = pd.read_sql(
+            "select * from " + self._data["table_name"] + " limit 10",
+            con=self._cnx
+        )
+        result += "First 10 rows = \n"
+        result += str(some_rows)
+
+        return result
+
+    def get_row_count(self):
+
+        row_count = self._data.get("row_count", None)
+        if row_count is None:
+            sql = "select count(*) as count from " + self._data["table_name"]
+            res, d = dbutils.run_q(sql, args=None, fetch=True, conn=self._cnx, commit=True)
+            row_count = d[0][0]
+            self._data['"row_count'] = row_count
+
+        return row_count
 
     def find_by_primary_key(self, key_fields, field_list=None):
         """
@@ -85,7 +132,4 @@ class RDBDataTable(BaseDataTable):
 
     def get_rows(self):
         return self._rows
-
-
-
 

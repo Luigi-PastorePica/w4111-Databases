@@ -2,3 +2,5 @@
 HW_Assignments/HW1_Template/src/__pycache__
 *.idea/workspace.xml
 HW_Assignments/HW1_Template/Data/.DS_Store
+HW_Assignments/HW1_Template/tests/csv_files/__init__.py
+HW_Assignments/HW2F19-Template/src/.DS_Store

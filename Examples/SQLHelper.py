@@ -16,16 +16,16 @@ You MUST create a user dbuser with the password dbuserdbuser.
 
 def _get_default_connection():
     result = pymysql.connect(host='localhost',
-                                 user='dbuser',
-                                 password='dbuserdbuser',
-                                 db='lahman2019raw',
-                                 charset='utf8mb4',
-                                 cursorclass=pymysql.cursors.DictCursor)
+                             user='dbuser',
+                             password='dbuserdbuser',
+                             db='lahman2019raw',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
     return result
 
 
 def run_q(sql, args=None, fetch=True, cur=None, conn=None, commit=True):
-    '''
+    """
     Helper function to run an SQL statement.
 
     :param sql: SQL template with placeholders for parameters.
@@ -36,7 +36,7 @@ def run_q(sql, args=None, fetch=True, cur=None, conn=None, commit=True):
     :param commit: This is wizard stuff. Do not worry about it.
 
     :return: A tuple of the form (execute response, fetched data)
-    '''
+    """
 
     cursor_created = False
     connection_created = False
@@ -98,6 +98,7 @@ def create_select(table_name, template, fields, order_by=None, limit=None, offse
     sql = "select " + field_list + " from " +  table_name + " " + w_clause
 
     return (sql, args)
+
 
 def template_to_where_clause(template):
     """
