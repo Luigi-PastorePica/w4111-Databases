@@ -3,6 +3,7 @@ import HW_Assignments.HW1_Template.src.dbutils as dbutils
 import json
 import pandas as pd
 
+
 pd.set_option("display.width", 196)
 pd.set_option('display.max_columns', 16)
 
@@ -39,7 +40,8 @@ class RDBDataTable(BaseDataTable):
     def __str__(self):
 
         result = "RDBDataTable:\n"
-        result += json.dumps(self._data, indent=2)
+        print(self._data.values())
+        # result += json.dumps(self._data.values(), indent=2)
 
         row_count = self.get_row_count()
         result += "\nNumber of rows = " + str(row_count)
@@ -66,12 +68,13 @@ class RDBDataTable(BaseDataTable):
 
     def find_by_primary_key(self, key_fields, field_list=None):
         """
-
         :param key_fields: The list with the values for the key_columns, in order, to use to find a record.
         :param field_list: A subset of the fields of the record to return.
         :return: None, or a dictionary containing the requested fields for the record identified
             by the key.
         """
+
+
         pass
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
@@ -85,14 +88,17 @@ class RDBDataTable(BaseDataTable):
         :return: A list containing dictionaries. A dictionary is in the list representing each record
             that matches the template. The dictionary only contains the requested fields.
         """
-        pass
+
+        sql, args = dbutils.create_select(self._data["table_name"], template, field_list)
+        results, data = dbutils.run_q(sql, args, conn=self._cnx)
+        return results, data
 
     def delete_by_key(self, key_fields):
         """
 
         Deletes the record that matches the key.
 
-        :param template: A template.
+        :param key_fields: A list of the keys for lookup, in order.
         :return: A count of the rows deleted.
         """
         pass
