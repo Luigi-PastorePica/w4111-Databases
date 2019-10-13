@@ -127,6 +127,8 @@ def create_select(table_name, template, fields, order_by=None, limit=None, offse
 def create_insert(table_name, row):
     """
 
+    Produce an insert statement: sql string and args
+
     :param table_name: A table name, which may be fully qualified.
     :param row: A Python dictionary of the form: { ..., "column_name" : value, ...}
     :return: SQL template string, args for insertion into the template
@@ -153,9 +155,13 @@ def create_insert(table_name, row):
 
     return (result, vals)
 
+
 def create_update(table_name, new_values, template):
     """
 
+    Generates UPDATE sql clause based on arguments.
+
+    :param table_name: A String holding the name of the table.
     :param new_values: A dictionary containing cols and the new values.
     :param template: A template to form the where clause.
     :return: An update statement template and args.
@@ -178,11 +184,18 @@ def create_update(table_name, new_values, template):
 
     return sql, args
 
-def create_delete():
-    """Delete
-The DELETE statement deletes all rows matching a WHERE condition.
-The syntax is:
-DELETE FROM table_name [WHERE Clause]
-DELETE is basically the same as a SELECT without the column list or an UPDATE without the SET clause.
-Umm, just modify/simplify the code for SELECT."""
-    pass
+
+def create_delete(table_name, template):
+    """
+    Produce a delete statement: sql string and args.
+
+    :param table_name: Table name: May be fully qualified dbname.tablename or just tablename.
+    :param template: One of Don Ferguson's weird JSON/python dictionary templates.
+    :return: A tuple of the form (sql string, args), where the sql string is a template.
+    """
+
+    w_clause, args = template_to_where_clause(template)
+
+    sql = "delete from " + table_name + " " + w_clause
+
+    return (sql, args)

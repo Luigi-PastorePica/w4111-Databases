@@ -15,6 +15,7 @@ import logging
 import os
 import csv
 import pandas as pd
+from collections import OrderedDict as OrderedDict
 
 # Using pandas will make the output more readable.
 pd.set_option("display.width", 256)
@@ -272,7 +273,7 @@ def t_insert():
                   'deathYear': '', 'deathMonth': '', 'deathDay': '',
                   'deathCountry': 'Aman', 'deathState': '', 'deathCity': '',
                   'nameFirst': 'Bilbo', 'nameLast': 'Baggins', 'nameGiven': 'Bilba Labingi',
-                  'weight': '', 'height': '', 'bats': '', 'throws': '',
+                  'weight': 'not much', 'height': 'very short', 'bats': '', 'throws': '',
                   'debut': '', 'finalGame': '',
                   'retroID': 'midget01', 'bbrefID': 'baggbil01'}
 
@@ -316,23 +317,39 @@ def t_save():
     truncate_counter = 0
     truncated_table = []
 
-    with open(full_name, "r") as original_file:
-        csv_d_rdr = csv.DictReader(original_file)
-        for row in csv_d_rdr:
-            if (truncate_counter % truncate_step) == 0:
-                truncated_table.append(row)
-            truncate_counter += 1
-
+    # If the CSV file at full_name_test does not exist, this will create it based on the CSV file at full_name
     if not (os.path.exists(full_name_test) and os.path.isfile(full_name_test)):
+
+        with open(full_name, "r") as original_file:
+            csv_d_rdr = csv.DictReader(original_file)
+            for row in csv_d_rdr:
+                if (truncate_counter % truncate_step) == 0:
+                    truncated_table.append(row)
+                truncate_counter += 1
+
         with open(full_name_test, "w") as csv_file:
             field_list = csv_d_rdr.fieldnames
             csv_d_writer = csv.DictWriter(csv_file, fieldnames=field_list)
+            csv_d_writer.writeheader()
             for row in truncated_table:
                 csv_d_writer.writerow(row)
 
     csv_tbl = CSVDataTable("Test table", connect_info_test, key_columns=key_cols)
 
+    statinfo = os.stat(full_name_test)
+    last_modified_prev = statinfo.st_mtime
+
     csv_tbl.save()
+
+    statinfo = os.stat(full_name_test)
+    last_modified_post= statinfo.st_mtime
+
+    # This probably should go in CSVDataTable.save() instead. If so, it should throw an exception.
+    # The exception can then be used here as some kind of trigger for an assert
+    if last_modified_post > last_modified_prev:
+        print("Saved changes in {}".format(full_name_test))
+    else:
+        print("The changes might not have been saved.")
 
 
 t_load()

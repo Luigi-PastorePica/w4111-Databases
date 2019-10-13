@@ -111,6 +111,7 @@ class CSVDataTable(BaseDataTable):
             field_list = list(self._rows[0].keys())
             csv_d_writer = csv.DictWriter(csv_file, fieldnames=field_list)
             rows_written = 0
+            csv_d_writer.writeheader()
             for row in self._rows:
                 csv_d_writer.writerow(row)
                 rows_written += 1

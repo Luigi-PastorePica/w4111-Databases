@@ -106,10 +106,17 @@ class RDBDataTable(BaseDataTable):
     def delete_by_template(self, template):
         """
 
+        Deletes the record that matches the template.
+
         :param template: Template to determine rows to delete.
         :return: Number of rows deleted.
         """
-        pass
+        sql, args = dbutils.create_delete(table_name=self._data["table_name"], template=template)
+
+        results, data = dbutils.run_q(sql=sql, args=args, conn=self._cnx)
+
+        return results, data
+
 
     def update_by_key(self, key_fields, new_values):
         """
@@ -126,7 +133,11 @@ class RDBDataTable(BaseDataTable):
         :param new_values: New values to set for matching fields.
         :return: Number of rows updated.
         """
-        pass
+
+        sql, args = dbutils.create_update(table_name=self._data["table_name"], new_values=new_values, template=template)
+        results, data = dbutils.run_q(sql=sql, args=args, conn=self._cnx)
+        print(results, data)
+        return results
 
     def insert(self, new_record):
         """
@@ -134,7 +145,10 @@ class RDBDataTable(BaseDataTable):
         :param new_record: A dictionary representing a row to add to the set of records.
         :return: None
         """
-        pass
+
+        sql, args = dbutils.create_insert(table_name=self._data["table_name"], row=new_record)
+        results, data = dbutils.run_q(sql, args=args, conn=self._cnx)
+        return results, data
 
     def get_rows(self):
         return self._rows
