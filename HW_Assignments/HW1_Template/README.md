@@ -1,6 +1,28 @@
 # W4111_F19_HW1
 Implementation template for homework 1.
 
+###Files included and directory structure:
+- HW_Assignments:
+    - HW1_Template:
+        - Data:
+            - Baseball:
+                - Batting.csv
+                - People.csv
+        - src:
+            - BaseDataTable.py
+            - CSVDataTable.py
+            - RDBDataTable.py
+            - dbutils.py
+        - tests:
+            - csv_files:
+                - TestTable.csv
+            - logs:
+                - csv_table_test.txt
+                - rdb_table_test.txt
+            - csv_table_tests.py
+            - rdb_table_tests.py
+        - README.md
+
 ## How CSVDataTable works:
 
 - The methods ending in _by_template(template, ...) iterate over the entirety of the list self._rows looking to match the 
@@ -64,18 +86,31 @@ video_oh18sep_2019
 
 ## How RDBDataTable works:
 
+An instance of this class connects to a MySQL database and can perform actions on the table specified in the instance's 
+constructor. To perform operations on multiple tables, it is necessary to instantiate one object of this class for each 
+of the tables.
+
 Most methods in this class depend on dbutils. dbutils is in charge of translating structures and data from the format 
-used by the API common to CSVDataTable and RDBDataTable to the appropriate sql format. 
+used by the API common to CSVDataTable and RDBDataTable to the appropriate sql format. The methods in the module dbutils 
+were written by Donald F. Ferguson, Ph.D. I added just a couple of the methods by modifying the code of the other 
+methods.
 
 The _by_key methods are dependent on the _by_template methods. This is because the _by_key methods use 
 _generate_template() to create a template that can then be used as arguments for the _by_template methods.
 
 ### Notes on RDBDataTable.py:
 
+_generate_template() is the same code as in CSVDataTable._generate_template()
 
 ---
 
 ## Unit Tests: 
+
+The Unit test logs might look a bit disorderly. Part of the reason is that I realized too late that maybe it would have 
+been preferable to use the logging module for test output. My guess is that the logging module seems to run on a 
+different thread, and its output is asynchronous, to that of the print buffer. For this reason, sometimes the text from 
+the logger and the text from the print statements will not collate properly and produce an awkward result in the console 
+and the log files.
 
 ###On TestTable.csv
 
@@ -128,10 +163,13 @@ three options:
 3. Remove (delete) TestTable.csv from the tests directory. When t_save is run again, it will then create a new 
 TestTable.csv file.
 
+
 ###How rdb_table_tests works
 
 All methods perform their operations on tables stored in a MySQL database. An RDBDataTable object is instantiated 
-inside each of the tests. This is done because the connection information might differ slightly from test to test.
+inside each of the tests. This is done because of 2 reasons: 1. the connection information might differ slightly from 
+test to test. 2. This allows for each test to be performed independently from the status of other instances, even if in 
+theory those instances might have been identical.
 
 
 ### Notes for rdb_table_tests.py

@@ -1,3 +1,9 @@
+"""
+Utilities in this module generate and execute sql statements
+
+Code provided by Donald F. Ferguson, Ph.D.
+"""
+
 from HW_Assignments.HW1_Template.src.BaseDataTable import BaseDataTable
 import pymysql
 import logging
@@ -199,3 +205,16 @@ def create_delete(table_name, template):
     sql = "delete from " + table_name + " " + w_clause
 
     return (sql, args)
+
+
+def create_select_all(table_name):
+
+    """
+    Obtains all rows from the specified table
+
+    :param table_name: A string containing the relative path to the table.
+    :return: A string containing the sql statement that retrieves all rows and all columns from a table.
+    """
+
+    sql = sql = "select * from {}".format(table_name)
+    return sql

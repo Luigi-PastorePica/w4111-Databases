@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b12d6f8e-1e9c-409f-b507-d967c9fcb1fd" name="Default" comment="Cleaned up the directory.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/RDBDataTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/RDBDataTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/dbutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/src/dbutils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/rdb_table_tests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs/rdb_table_tests.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/rdb_table_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/rdb_table_tests.py" afterDir="false" />
     </list>
@@ -283,7 +285,7 @@
       <workItem from="1570673755884" duration="4587000" />
       <workItem from="1570740279907" duration="610000" />
       <workItem from="1570767244619" duration="2020000" />
-      <workItem from="1570769513193" duration="43326000" />
+      <workItem from="1570769513193" duration="49451000" />
     </task>
     <task id="LOCAL-00001" summary="Moved content">
       <created>1545233951773</created>
@@ -381,6 +383,6 @@
     <SUITE FILE_PATH="coverage/w4111_Databases$unit_tests.coverage" NAME="unit_tests Coverage Results" MODIFIED="1570661333172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests" />
     <SUITE FILE_PATH="coverage/w4111_Databases$csv_table_tests.coverage" NAME="csv_table_tests Coverage Results" MODIFIED="1570997970014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests" />
     <SUITE FILE_PATH="coverage/w4111_Databases$test_helper.coverage" NAME="test_helper Coverage Results" MODIFIED="1565809298574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Examples" />
-    <SUITE FILE_PATH="coverage/w4111_Databases$rdb_table_tests.coverage" NAME="rdb_table_tests Coverage Results" MODIFIED="1571018654936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs" />
+    <SUITE FILE_PATH="coverage/w4111_Databases$rdb_table_tests.coverage" NAME="rdb_table_tests Coverage Results" MODIFIED="1571029643596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/HW_Assignments/HW1_Template/tests/logs" />
   </component>
 </project>

@@ -1,52 +1,42 @@
 DEBUG:root:Executing SQL = select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  playerID='willite01' 
 Full query:
 Returned 1
- DEBUG:root:Executing SQL = select  *  from lahman2019raw.people  WHERE  playerID='willite01' 
-   nameLast nameFirst birthYear birthState birthMonth
+    nameLast nameFirst birthYear birthState birthMonth
 0  Williams       Ted      1918         CA          8
+DEBUG:root:Executing SQL = select  *  from lahman2019raw.people  WHERE  playerID='willite01' 
 No fields (SELECT *):
 Returned 1
- DEBUG:root:Executing SQL = select  *  from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
-DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
-    playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
+     playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
 0  willite01      1918          8       30          USA         CA  San Diego      2002  ...    205     75    L      R  1939-04-20  1960-09-28  willt103  willite01
 
 [1 rows x 24 columns]
-(1, [{'playerID': 'baggbil01', 'birthYear': '2900', 'birthMonth': '01', 'birthDay': '02', 'birthCountry': 'Arnor', 'birthState': 'The Shire', 'birthCity': 'Hobbiton', 'deathYear': '', 'deathMonth': '', 'deathDay': '', 'deathCountry': 'Aman', 'deathState': '', 'deathCity': '', 'nameFirst': 'Bilbo', 'nameLast': 'Baggins', 'nameGiven': 'Bilba Labingi', 'weight': 'got chubby after a while', 'height': 'not so short', 'bats': '', 'throws': '', 'debut': '', 'finalGame': 'Smaug', 'retroID': 'midget01', 'bbrefID': 'baggbil01'}])
+DEBUG:root:Executing SQL = select  *  from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
+DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
+(1, [{'playerID': 'baggbil01', 'birthYear': '2900', 'birthMonth': '01', 'birthDay': '02', 'birthCountry': 'Arnor', 'birthState': 'The Shire', 'birthCity': 'Hobbiton', 'deathYear': '', 'deathMonth': '', 'deathDay': '', 'deathCountry': 'Aman', 'deathState': '', 'deathCity': '', 'nameFirst': 'Bilbo', 'nameLast': 'Baggins', 'nameGiven': 'Bilba Labingi', 'weight': 'got chubby after a while', 'height': 'not so short', 'bats': '', 'throws': '', 'debut': '', 'finalGame': 'Against Smaug', 'retroID': 'midget01', 'bbrefID': 'baggbil01'}])
 Delete returned 1
 
-SQL =  select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast=%s AND birthCity=%s  , args =  ['Williams', 'San Diego']
 DEBUG:root:Executing SQL = select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
+DEBUG:root:Executing SQL = select  *  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
 Full query:
+Returned 2
     nameLast nameFirst birthYear birthState birthMonth
 0  Williams       Ted      1918         CA          8
 1  Williams    Trevor      1992         CA          4
-DEBUG:root:Executing SQL = select  *  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
 No fields (SELECT *):
- DEBUG:root:Executing SQL = select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
+Returned 2
+ DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
     playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
-0  willite01      1918          8       30          USA         CA  San Diego      2002  ...    205     75    L      R  1939-04-20  1960-09-28  willt103  willite01
-1  willitr01      1992          4       25          USA         CA  San Diego            ...    230     75    R      R  2016-09-07  2018-09-27  willt002  willitr01
-
-[2 rows x 24 columns]
-Full query:
-Returned 2
-    nameLast nameFirst birthYear birthState birthMonth
-0  Williams       Ted      1918         CA          8
-1  Williams    Trevor      1992         CA          4
-DEBUG:root:Executing SQL = select  *  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
-No fields (SELECT *):
-Returned 2
-     playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
 0  willite01      1918          8       30          USA         CA  San Diego      2002  ...    205     75    L      R  1939-04-20  1960-09-28  willt103  willite01
 1  willitr01      1992          4       25          USA         CA  San Diego            ...    230     75    R      R  2016-09-07  2018-09-27  willt002  willitr01
 
 [2 rows x 24 columns]
 Delete returned 0
 
-DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
 DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable (playerID,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,finalGame,retroID,bbrefID)  values ('baggbil01','2900','01','02','Arnor','The Shire','Hobbiton','','','','Aman','','','Bilbo','Baggins','Bilba Labingi','not much','very short','','','','','midget01','baggbil01')
 DEBUG:root:Executing SQL = select  *  from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
+DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable (playerID,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,finalGame,retroID,bbrefID)  values ('baggbil01','2900','01','02','Arnor','The Shire','Hobbiton','','','','Aman','','','Bilbo','Baggins','Bilba Labingi','not much','very short','','','','','midget01','baggbil01')
+DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable ()  values ()
+DEBUG:root:Executing SQL = update lahman2019raw.testtable set height='not so short',weight='got chubby after a while'  WHERE  playerID='baggbil01' 
 Insert was successful.
 Found in table the following record: 
     playerID birthYear birthMonth birthDay birthCountry birthState birthCity deathYear  ...    weight      height bats throws debut finalGame   retroID    bbrefID
@@ -59,15 +49,29 @@ TEST PASSED!
 Attempting to insert new record with empty set of values:
 Insert using empty set of values was not permitted: (1364, "Field 'playerID' doesn't have a default value")
 TEST PASSED!
-DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable (playerID,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,finalGame,retroID,bbrefID)  values ('baggbil01','2900','01','02','Arnor','The Shire','Hobbiton','','','','Aman','','','Bilbo','Baggins','Bilba Labingi','not much','very short','','','','','midget01','baggbil01')
-DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable ()  values ()
-DEBUG:root:Executing SQL = update lahman2019raw.testtable set height='not so short',weight='got chubby after a while'  WHERE  playerID='baggbil01' 
-Update returned:
- Updated rows: 1
-
-Could not update because of DB error: (1054, "Unknown column 'brithYear' in 'field list'")
 Update returned:
  Updated rows: 1
 
 DEBUG:root:Executing SQL = update lahman2019raw.testtable set brithYear='c. 2900'  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
 DEBUG:root:Executing SQL = update lahman2019raw.testtable set finalGame='Against Smaug'  WHERE  playerID='baggbil01' AND nameLast='Baggins' AND birthCity='Hobbiton' 
+DEBUG:root:Executing SQL = select * from lahman2019raw.testtable
+Could not update because of DB error: (1054, "Unknown column 'brithYear' in 'field list'")
+Update returned:
+ Updated rows: 1
+
+Getting all rows:
+Rows: 1963
+       playerID birthYear birthMonth birthDay birthCountry birthState         birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
+0     aardsda01      1981         12       27          USA         CO            Denver            ...    215     75    R      R  2004-04-06  2015-08-23  aardd001  aardsda01
+1     abbotda01      1862          3       16          USA         OH           Portage      1930  ...    190     71    R      R  1890-04-19  1890-05-23  abbod101  abbotda01
+2     abercda01      1850          1        2          USA         OK       Fort Towson      1939  ...                            1871-10-21  1871-10-21  aberd101  abercda01
+3     abramca01      1924          3        2          USA         PA      Philadelphia      1997  ...    185     72    L      L  1949-04-19  1956-05-09  abrac101  abramca01
+4     accarje01      1981         12       18          USA         AZ           Phoenix            ...    195     72    R      R  2005-05-04  2012-09-27  accaj001  accarje01
+...         ...       ...        ...      ...          ...        ...               ...       ...  ...    ...    ...  ...    ...         ...         ...       ...        ...
+1958  zettlge01      1844          7       12          USA         NY      Williamsburg      1905  ...    162     69    R      R  1871-05-08  1876-09-16  zettg101  zettlge01
+1959  zimmech01      1860         11       23          USA         OH          Marietta      1949  ...    190     72    R      R  1884-07-18  1903-09-27  zimmc101  zimmech01
+1960   zinkch01      1979          8       26          USA         CA        Carmichael            ...    190     73    R      R  2008-08-12  2008-08-12  zinkc001   zinkch01
+1961  zitzmbi01      1895         11       19          USA         NY  Long Island City      1985  ...    175     70    R      R  1919-04-27  1929-09-25  zitzb101  zitzmbi01
+1962  zuninmi01      1991          3       25          USA         FL        Cape Coral            ...    220     74    R      R  2013-06-12  2018-09-29  zunim001  zuninmi01
+
+[1963 rows x 24 columns]

@@ -1,3 +1,16 @@
+"""
+Programmer: Luigi A. Pastore Pica
+UNI: lap2204
+Template code provided by Donald F. Ferguson, Ph.D.
+
+This file contains the class RDBDDataTable, and instance of which can connect to MySQL database and perform operations
+on a table specified in the constructor call. This implies that the user is expected to use a new instance of this class
+for each table they would like to access within the DB.
+
+
+"""
+
+
 from HW_Assignments.HW1_Template.src.BaseDataTable import BaseDataTable
 import HW_Assignments.HW1_Template.src.dbutils as dbutils
 import json
@@ -68,10 +81,12 @@ class RDBDataTable(BaseDataTable):
 
     def find_by_primary_key(self, key_fields, field_list=None):
         """
+        Finds and returns the row(s) that matches the key_fields passed as argument.
+
         :param key_fields: The list with the values for the key_columns, in order, to use to find a record.
         :param field_list: A subset of the fields of the record to return.
-        :return: None, or a dictionary containing the requested fields for the record identified
-            by the key.
+        :return: None, or a dictionary containing the requested fields for the record(s) identified by the key. In case
+        that field_list is None, it returns all columns of the identified record(s)
         """
 
         template = self._generate_template(key_fields)
@@ -84,6 +99,7 @@ class RDBDataTable(BaseDataTable):
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
         """
+        Finds and returns the row that matches the template.
 
         :param template: A dictionary of the form { "field1" : value1, "field2": value2, ...}
         :param field_list: A list of request fields of the form, ['fielda', 'fieldb', ...]
@@ -128,6 +144,7 @@ class RDBDataTable(BaseDataTable):
 
     def update_by_key(self, key_fields, new_values):
         """
+        Updates the table the instance of this class is related to by using the new_values passed as an argument.
 
         :param key_fields: List of value for the key fields.
         :param new_values: A dict of field:value to set for updated row.
@@ -140,6 +157,7 @@ class RDBDataTable(BaseDataTable):
 
     def update_by_template(self, template, new_values):
         """
+        Updates the table the instance of this class is related to by using the new_values passed as an argument.
 
         :param template: Template for rows to match.
         :param new_values: New values to set for matching fields.
@@ -152,6 +170,7 @@ class RDBDataTable(BaseDataTable):
 
     def insert(self, new_record):
         """
+        Inserts a new record (row) into the DB table the instance of this class is related to.
 
         :param new_record: A dictionary representing a row to add to the set of records.
         :return: None
@@ -159,11 +178,13 @@ class RDBDataTable(BaseDataTable):
 
         sql, args = dbutils.create_insert(table_name=self._data["table_name"], row=new_record)
         results, data = dbutils.run_q(sql, args=args, conn=self._cnx)
-        # return results, data
         return None
 
     def get_rows(self):
-        return self._rows
+        # return self._rows
+        sql = dbutils.create_select_all(self._data["table_name"])
+        results, data = dbutils.run_q(sql, conn=self._cnx)
+        return results, data
 
     def _generate_template(self, key_fields):
         """
