@@ -8,19 +8,20 @@ Implementation template for homework 1.
             - Baseball:
                 - Batting.csv
                 - People.csv
+                - Other CSV files
         - src:
             - BaseDataTable.py
             - CSVDataTable.py
             - RDBDataTable.py
             - dbutils.py
         - tests:
+            - csv_table_tests.py
+            - rdb_table_tests.py
             - csv_files:
                 - TestTable.csv
             - logs:
                 - csv_table_test.txt
                 - rdb_table_test.txt
-            - csv_table_tests.py
-            - rdb_table_tests.py
         - README.md
 
 ## How CSVDataTable works:
@@ -110,7 +111,8 @@ The Unit test logs might look a bit disorderly. Part of the reason is that I rea
 been preferable to use the logging module for test output. My guess is that the logging module seems to run on a 
 different thread, and its output is asynchronous, to that of the print buffer. For this reason, sometimes the text from 
 the logger and the text from the print statements will not collate properly and produce an awkward result in the console 
-and the log files.
+and the log files. It is also possible that I might have missed some small crucial piece of information during class, 
+video office hours, specifications for the assignment, or a Piazza post that specified how to treat output messages. 
 
 ###On TestTable.csv
 
