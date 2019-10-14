@@ -74,8 +74,14 @@ class RDBDataTable(BaseDataTable):
             by the key.
         """
 
+        template = {}
+        template = self._generate_template(key_fields)
 
-        pass
+        results, data = self.find_by_template(template=template, field_list=field_list)
+        if results > 0:
+            return results, data
+        else:
+            return None
 
     def find_by_template(self, template, field_list=None, limit=None, offset=None, order_by=None):
         """
@@ -115,8 +121,7 @@ class RDBDataTable(BaseDataTable):
 
         results, data = dbutils.run_q(sql=sql, args=args, conn=self._cnx)
 
-        return results, data
-
+        return results
 
     def update_by_key(self, key_fields, new_values):
         """
@@ -136,7 +141,6 @@ class RDBDataTable(BaseDataTable):
 
         sql, args = dbutils.create_update(table_name=self._data["table_name"], new_values=new_values, template=template)
         results, data = dbutils.run_q(sql=sql, args=args, conn=self._cnx)
-        print(results, data)
         return results
 
     def insert(self, new_record):
@@ -148,8 +152,23 @@ class RDBDataTable(BaseDataTable):
 
         sql, args = dbutils.create_insert(table_name=self._data["table_name"], row=new_record)
         results, data = dbutils.run_q(sql, args=args, conn=self._cnx)
-        return results, data
+        # return results, data
+        return None
 
     def get_rows(self):
         return self._rows
 
+    def _generate_template(self, key_fields):
+        """
+        Generates a template from key_columns and key_fields
+
+        :param key_fields: The list with the values for the key_columns, in order, to use to find a record.
+        """
+        template = {}
+        key_columns = self._data.get("key_columns")
+        for field_pos in range(len(key_fields)):
+            column = key_columns[field_pos]
+            field = key_fields[field_pos]
+            template[column] = field
+
+        return template

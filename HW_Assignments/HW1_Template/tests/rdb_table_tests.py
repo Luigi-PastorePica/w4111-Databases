@@ -59,13 +59,44 @@ def t_template_to_where_clause():
     else:
         print("None.")
 
+def t_find_by_primary_key():
+
+    table_name = "lahman2019raw.people"
+    fields = ['nameLast', 'nameFirst', 'birthYear', 'birthState', 'birthMonth']
+    key_cols = ['playerID']
+    key_fields = ['willite01']
+
+    # print("SQL = ", sql, ", args = ", args)
+
+    c_info = {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "dbuserdbuser",
+        "db": "lahman2019raw",
+        "cursorclass": pymysql.cursors.DictCursor
+    }
+
+    rdb_table = RDBDataTable(table_name=table_name, connect_info=c_info, key_columns=key_cols)
+    results, data = rdb_table.find_by_primary_key(key_fields=key_fields, field_list=fields)
+    if results is not None:
+        print("Full query:\nReturned {}\n".format(results), pd.DataFrame(data))
+    else:
+        print("No record found")
+
+    results, data = rdb_table.find_by_primary_key(key_fields=key_fields)
+    if results is not None:
+        print("No fields (SELECT *):\nReturned {}\n".format(results), pd.DataFrame(data))
+    else:
+        print("No record found")
+
 
 def t_find_by_template():
 
     table_name = "lahman2019raw.people"
     fields = ['nameLast', 'nameFirst', 'birthYear', 'birthState', 'birthMonth']
     template = {"nameLast": "Williams", "birthCity": "San Diego"}
-    key_cols = ['playerID', 'teamID', 'yearID', 'stint']
+    key_cols = ['playerID']
 
     # print("SQL = ", sql, ", args = ", args)
 
@@ -113,26 +144,38 @@ def t_insert():
     }
 
     rdb_table = RDBDataTable(table_name=table_name, connect_info=c_info, key_columns=key_cols)
-    results, data = rdb_table.insert(new_record=new_record)
-    print("Insert returned:\nResults {}\n".format(results), pd.DataFrame(data))
+    # results, data = rdb_table.insert(new_record=new_record)
+    # print("Insert returned:\nResults {}\n".format(results), pd.DataFrame(data))
+    rdb_table.insert(new_record=new_record)
+
+    results, data = rdb_table.find_by_template({'playerID': 'baggbil01'})
+    if results > 0:
+        print("Insert was successful.\nFound in table the following record: \n{}".format(pd.DataFrame(data)))
+    else:
+        print("Insert failed. The record could not be found after insert statement.")
+
     try:
         print("Attempting to insert record with duplicate primary key: ")
-        results, data = rdb_table.insert(new_record=new_record)
+        # results, data = rdb_table.insert(new_record=new_record)
+        rdb_table.insert(new_record=new_record)
     except pymysql.IntegrityError as ie:
         print("Duplicate insert denied successfully: {}".format(str(ie)))
+        print("TEST PASSED!")
     else:
-        print("Insert should have been stopped due to duplicate entry.\n")
-        print("Insert returned {}\n".format(results), pd.DataFrame(data))
+        print("Insert should have been stopped due to duplicate entry, but it was not.\n")
+        # print("Insert returned {}\n".format(results), pd.DataFrame(data))
         print("TEST FAILED!")
 
     try:
         print("Attempting to insert new record with empty set of values:")
-        results, data = rdb_table.insert(new_record={})
+        # results, data = rdb_table.insert(new_record={})
+        rdb_table.insert(new_record={})
     except pymysql.InternalError as ie:
         print("Insert using empty set of values was not permitted: {}".format(str(ie)))
+        print("TEST PASSED!")
     else:
-        print("Insert should have been stopped due to empty set of values.\n")
-        print("Inserting empty record returned {}\n".format(results), pd.DataFrame(data))
+        print("Insert should have been stopped due to empty set of values, but it was not.\n")
+        # print("Inserting empty record returned {}\n".format(results), pd.DataFrame(data))
         print("TEST FAILED!")
 
 
@@ -141,7 +184,8 @@ def t_update_by_template():
     template_wo_key = {"nameLast": "Baggins", "birthCity": "Hobbiton"}
     template_w_key = {"playerID": "baggbil01", "nameLast": "Baggins", "birthCity": "Hobbiton"}
     key_cols = ['playerID', 'teamID', 'yearID', 'stint']
-    new_values = {'height': 'not so short', 'weight': 'got chubby after a while'}
+    new_values1 = {'height': 'not so short', 'weight': 'got chubby after a while'}
+    new_values2 = {'finalGame': 'Smaug'}
 
     c_info = {
         "host": "localhost",
@@ -154,21 +198,32 @@ def t_update_by_template():
 
     rdb_table = RDBDataTable(table_name=table_name, connect_info=c_info, key_columns=key_cols)
 
-    # These two try-except blocks are a hack to make the tests keep running.
-    # TODO find how to confirm update took place and update the code below.
+    # This block of code needs to be in a try-except block because MySQL could deny the update operation if a key is not
+    # provided in the template. See README.md for more details.
     try:
-        print("Trying to update without specifying primary key value in WHERE")
-        results, data = rdb_table.update_by_template(template=template_wo_key, new_values=new_values)
-        print("Update returned {}\n".format(results), pd.DataFrame(data))
-    except TypeError as te:
-        print("Could not update: {}".format(str(te)))
+        results = rdb_table.update_by_template(template=template_wo_key, new_values=new_values1)
+        print("Update returned:\n Updated: {}\n".format(results))
+    except Exception as e:
+        print("Could not update because of DB error: {}".format(str(e)))
 
-    try:
-        print("Trying to update using primary key value in WHERE")
-        results, data = rdb_table.update_by_template(template=template_w_key, new_values=new_values)
-        print("Update returned {}\n".format(results), pd.DataFrame(data))
-    except TypeError as te:
-        print("Could not update: {}".format(str(te)))
+    results = rdb_table.update_by_template(template=template_w_key, new_values=new_values2)
+    print("Update returned:\n Updated: {}\n".format(results))
+
+
+    # These two try-except blocks are a hack to make the tests keep running.
+    # try:
+    #     print("Trying to update without specifying primary key value in WHERE")
+    #     results = rdb_table.update_by_template(template=template_wo_key, new_values=new_values)
+    #     print("Update returned {}\n".format(results))
+    # except TypeError as te:
+    #     print("Could not update: {}".format(str(te)))
+    #
+    # try:
+    #     print("Trying to update using primary key value in WHERE")
+    #     results = rdb_table.update_by_template(template=template_w_key, new_values=new_values)
+    #     print("Update returned {}\n".format(results))
+    # except TypeError as te:
+    #     print("Could not update: {}".format(str(te)))
 
 
 def t_delete_by_template():
@@ -187,11 +242,13 @@ def t_delete_by_template():
     }
 
     rdb_table = RDBDataTable(table_name=table_name, connect_info=c_info, key_columns=key_cols)
-    results, data = rdb_table.delete_by_template(template=template)
-    print("Delete returned {}\n".format(results), pd.DataFrame(data))
+    results = rdb_table.delete_by_template(template=template)
+    # print("Delete returned {}\n".format(results), pd.DataFrame(data))
+    print("Delete returned {}\n".format(results))
 
 
 t_init()
+t_find_by_primary_key()
 t_template_to_where_clause()
 t_find_by_template()
 t_delete_by_template()

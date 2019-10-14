@@ -62,11 +62,36 @@ https://stackoverflow.com/questions/42202872/how-to-convert-list-to-row-datafram
 _validate_template_and_fields() and its code were provided by Dr. Donald Ferguson in the Columbia CVN video 
 video_oh18sep_2019
 
+## How RDBDataTable works:
+
+Most methods in this class depend on dbutils. dbutils is in charge of translating structures and data from the format 
+used by the API common to CSVDataTable and RDBDataTable to the appropriate sql format. 
+
+The _by_key methods are dependent on the _by_template methods. This is because the _by_key methods use 
+_generate_template() to create a template that can then be used as arguments for the _by_template methods.
+
+### Notes on RDBDataTable.py:
+
+
 ---
 
 ## Unit Tests: 
 
-HW1_Template/tests/csv_table_tests.py
+###On TestTable.csv
+
+Path: HW_Assignments/HW1_Template/tests/csv_files/TestTable.csv
+
+You will notice **only some** of the tests are performed on TestTable.csv. This is mainly because of two reasons:
+1. The idea of creating a table that contains a small subset of rows from another table came late in development.
+2. Test table TestTable.csv was created with the objective of inserting, updating and deleting data from a table without
+modifying the original tables in Data/Baseball folder. Therefore, changing other tests (like find_by_) to use TestTable, 
+which implies changing search templates, keys, values, etc. would have meant an unnecessary time investment for the 
+purpose of the assignment and of the tests.
+
+###How csv_table_tests works
+
+Path: HW_Assignments/HW1_Template/tests/csv_table_tests.py  
+Output: HW_Assignments/HW1_Template/tests/logs/csv_table_test.txt
 
 Tests for:
 
@@ -102,3 +127,21 @@ three options:
 2. Rename a copy of another csv formatted file to TestTable.csv (analogous to option 1)
 3. Remove (delete) TestTable.csv from the tests directory. When t_save is run again, it will then create a new 
 TestTable.csv file.
+
+###How rdb_table_tests works
+
+All methods perform their operations on tables stored in a MySQL database. An RDBDataTable object is instantiated 
+inside each of the tests. This is done because the connection information might differ slightly from test to test.
+
+
+### Notes for rdb_table_tests.py
+Path: HW_Assignments/HW1_Template/tests/rdb_table_tests.py  
+Output: HW_Assignments/HW1_Template/tests/logs/rdb_table_test.txt
+
+t_update_by_template has part of the test in a try block. This was done because the block in question is trying to make 
+an update to the table without providing the primary key in the template. Apparently, MySQL could complain in certain 
+cases when doing this particular kind of update. This error was thrown by MySQLWorkbench, which claimed the reason was 
+that the DB is using safe update mode and thus cannot update without the primary key provided in the template. However, 
+pymysql did not raise the same warning and was more than happy to oblige and just proceeded to make the update. Because 
+of this, it is unclear at the moment whether pymsql can throw an error when trying to perform this statement under 
+certain conditions. Until then, the test will catch any exception that is thrown when performing that particular update.
