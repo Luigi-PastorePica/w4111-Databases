@@ -74,7 +74,6 @@ class RDBDataTable(BaseDataTable):
             by the key.
         """
 
-        template = {}
         template = self._generate_template(key_fields)
 
         results, data = self.find_by_template(template=template, field_list=field_list)
@@ -107,7 +106,11 @@ class RDBDataTable(BaseDataTable):
         :param key_fields: A list of the keys for lookup, in order.
         :return: A count of the rows deleted.
         """
-        pass
+
+        template = self._generate_template(key_fields)
+
+        results = self.delete_by_template(template)
+        return results
 
     def delete_by_template(self, template):
         """
@@ -130,6 +133,10 @@ class RDBDataTable(BaseDataTable):
         :param new_values: A dict of field:value to set for updated row.
         :return: Number of rows updated.
         """
+
+        template = self._generate_template(key_fields)
+        results = self.update_by_template(template=template, new_values=new_values)
+        return results
 
     def update_by_template(self, template, new_values):
         """

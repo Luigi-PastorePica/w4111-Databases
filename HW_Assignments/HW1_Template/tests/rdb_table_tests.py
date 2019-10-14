@@ -179,13 +179,34 @@ def t_insert():
         print("TEST FAILED!")
 
 
+def t_update_by_key():
+    table_name = "lahman2019raw.testtable"
+    key_cols = ['playerID']
+    key_fields = ['baggbil01']
+    new_values = {'height': 'not so short', 'weight': 'got chubby after a while'}
+
+    c_info = {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "dbuserdbuser",
+        "db": "lahman2019raw",
+        "cursorclass": pymysql.cursors.DictCursor
+    }
+
+    rdb_table = RDBDataTable(table_name=table_name, connect_info=c_info, key_columns=key_cols)
+
+    results = rdb_table.update_by_key(key_fields=key_fields, new_values=new_values)
+    print("Update returned:\n Updated rows: {}\n".format(results))
+
+
 def t_update_by_template():
     table_name = "lahman2019raw.testtable"
     template_wo_key = {"nameLast": "Baggins", "birthCity": "Hobbiton"}
     template_w_key = {"playerID": "baggbil01", "nameLast": "Baggins", "birthCity": "Hobbiton"}
     key_cols = ['playerID', 'teamID', 'yearID', 'stint']
-    new_values1 = {'height': 'not so short', 'weight': 'got chubby after a while'}
-    new_values2 = {'finalGame': 'Smaug'}
+    new_values1 = {'brithYear': 'c. 2900'}
+    new_values2 = {'finalGame': 'Against Smaug'}
 
     c_info = {
         "host": "localhost",
@@ -202,29 +223,33 @@ def t_update_by_template():
     # provided in the template. See README.md for more details.
     try:
         results = rdb_table.update_by_template(template=template_wo_key, new_values=new_values1)
-        print("Update returned:\n Updated: {}\n".format(results))
+        print("Update returned:\n Updated rows: {}\n".format(results))
     except Exception as e:
         print("Could not update because of DB error: {}".format(str(e)))
 
     results = rdb_table.update_by_template(template=template_w_key, new_values=new_values2)
-    print("Update returned:\n Updated: {}\n".format(results))
+    print("Update returned:\n Updated rows: {}\n".format(results))
 
 
-    # These two try-except blocks are a hack to make the tests keep running.
-    # try:
-    #     print("Trying to update without specifying primary key value in WHERE")
-    #     results = rdb_table.update_by_template(template=template_wo_key, new_values=new_values)
-    #     print("Update returned {}\n".format(results))
-    # except TypeError as te:
-    #     print("Could not update: {}".format(str(te)))
-    #
-    # try:
-    #     print("Trying to update using primary key value in WHERE")
-    #     results = rdb_table.update_by_template(template=template_w_key, new_values=new_values)
-    #     print("Update returned {}\n".format(results))
-    # except TypeError as te:
-    #     print("Could not update: {}".format(str(te)))
+def t_delete_by_key():
 
+    table_name = "lahman2019raw.testtable"
+    key_cols = ['playerID']
+    key_fields = ['baggbil01']
+
+    c_info = {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "dbuserdbuser",
+        "db": "lahman2019raw",
+        "cursorclass": pymysql.cursors.DictCursor
+    }
+
+    rdb_table = RDBDataTable(table_name=table_name, connect_info=c_info, key_columns=key_cols)
+    print(rdb_table.find_by_primary_key(key_fields))
+    results = rdb_table.delete_by_key(key_fields)
+    print("Delete returned {}\n".format(results))
 
 def t_delete_by_template():
 
@@ -249,9 +274,11 @@ def t_delete_by_template():
 
 t_init()
 t_find_by_primary_key()
+t_delete_by_key()
 t_template_to_where_clause()
 t_find_by_template()
 t_delete_by_template()
 t_insert()
+t_update_by_key()
 t_update_by_template()
 

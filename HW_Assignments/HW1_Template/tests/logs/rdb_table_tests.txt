@@ -6,10 +6,15 @@ Returned 1
 0  Williams       Ted      1918         CA          8
 No fields (SELECT *):
 Returned 1
-     playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
+ DEBUG:root:Executing SQL = select  *  from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
+DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
+    playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
 0  willite01      1918          8       30          USA         CA  San Diego      2002  ...    205     75    L      R  1939-04-20  1960-09-28  willt103  willite01
 
 [1 rows x 24 columns]
+(1, [{'playerID': 'baggbil01', 'birthYear': '2900', 'birthMonth': '01', 'birthDay': '02', 'birthCountry': 'Arnor', 'birthState': 'The Shire', 'birthCity': 'Hobbiton', 'deathYear': '', 'deathMonth': '', 'deathDay': '', 'deathCountry': 'Aman', 'deathState': '', 'deathCity': '', 'nameFirst': 'Bilbo', 'nameLast': 'Baggins', 'nameGiven': 'Bilba Labingi', 'weight': 'got chubby after a while', 'height': 'not so short', 'bats': '', 'throws': '', 'debut': '', 'finalGame': 'Smaug', 'retroID': 'midget01', 'bbrefID': 'baggbil01'}])
+Delete returned 1
+
 SQL =  select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast=%s AND birthCity=%s  , args =  ['Williams', 'San Diego']
 DEBUG:root:Executing SQL = select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
 Full query:
@@ -18,12 +23,12 @@ Full query:
 1  Williams    Trevor      1992         CA          4
 DEBUG:root:Executing SQL = select  *  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
 No fields (SELECT *):
-     playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
+ DEBUG:root:Executing SQL = select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
+    playerID birthYear birthMonth birthDay birthCountry birthState  birthCity deathYear  ... weight height bats throws       debut   finalGame   retroID    bbrefID
 0  willite01      1918          8       30          USA         CA  San Diego      2002  ...    205     75    L      R  1939-04-20  1960-09-28  willt103  willite01
 1  willitr01      1992          4       25          USA         CA  San Diego            ...    230     75    R      R  2016-09-07  2018-09-27  willt002  willitr01
 
 [2 rows x 24 columns]
-DEBUG:root:Executing SQL = select  nameLast,nameFirst,birthYear,birthState,birthMonth  from lahman2019raw.people  WHERE  nameLast='Williams' AND birthCity='San Diego' 
 Full query:
 Returned 2
     nameLast nameFirst birthYear birthState birthMonth
@@ -37,9 +42,9 @@ Returned 2
 1  willitr01      1992          4       25          USA         CA  San Diego            ...    230     75    R      R  2016-09-07  2018-09-27  willt002  willitr01
 
 [2 rows x 24 columns]
-DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
-Delete returned 1
+Delete returned 0
 
+DEBUG:root:Executing SQL = delete from lahman2019raw.testtable  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
 DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable (playerID,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,finalGame,retroID,bbrefID)  values ('baggbil01','2900','01','02','Arnor','The Shire','Hobbiton','','','','Aman','','','Bilbo','Baggins','Bilba Labingi','not much','very short','','','','','midget01','baggbil01')
 DEBUG:root:Executing SQL = select  *  from lahman2019raw.testtable  WHERE  playerID='baggbil01' 
 Insert was successful.
@@ -56,11 +61,13 @@ Insert using empty set of values was not permitted: (1364, "Field 'playerID' doe
 TEST PASSED!
 DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable (playerID,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,nameFirst,nameLast,nameGiven,weight,height,bats,throws,debut,finalGame,retroID,bbrefID)  values ('baggbil01','2900','01','02','Arnor','The Shire','Hobbiton','','','','Aman','','','Bilbo','Baggins','Bilba Labingi','not much','very short','','','','','midget01','baggbil01')
 DEBUG:root:Executing SQL = Insert into lahman2019raw.testtable ()  values ()
-DEBUG:root:Executing SQL = update lahman2019raw.testtable set height='not so short',weight='got chubby after a while'  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
+DEBUG:root:Executing SQL = update lahman2019raw.testtable set height='not so short',weight='got chubby after a while'  WHERE  playerID='baggbil01' 
 Update returned:
- Updated: 1
+ Updated rows: 1
 
+Could not update because of DB error: (1054, "Unknown column 'brithYear' in 'field list'")
 Update returned:
- Updated: 1
+ Updated rows: 1
 
-DEBUG:root:Executing SQL = update lahman2019raw.testtable set finalGame='Smaug'  WHERE  playerID='baggbil01' AND nameLast='Baggins' AND birthCity='Hobbiton' 
+DEBUG:root:Executing SQL = update lahman2019raw.testtable set brithYear='c. 2900'  WHERE  nameLast='Baggins' AND birthCity='Hobbiton' 
+DEBUG:root:Executing SQL = update lahman2019raw.testtable set finalGame='Against Smaug'  WHERE  playerID='baggbil01' AND nameLast='Baggins' AND birthCity='Hobbiton' 
