@@ -1,6 +1,6 @@
 import pymysql
-import src.data_service.dbutils as dbutils
-import src.data_service.RDBDataTable as RDBDataTable
+import HW_Assignments.HW2F19_Template.src.data_service.dbutils as dbutils
+import HW_Assignments.HW2F19_Template.src.data_service.RDBDataTable as RDBDataTable
 
 # The REST application server app.py will be handling multiple requests over a long period of time.
 # It is inefficient to create an instance of RDBDataTable for each request.  This is a cache of created
@@ -11,13 +11,16 @@ _db_tables = {}
 # for the sake of time. What I would do if I had more time: Something similar to what one of the CAs suggested, which is
 # having RDBDataTable have None default values for table_name and db_name. In case such values were Null, connect_info
 # would have to be provided. I think in this way it would make sense to have a function return the connect info.
-connect_info = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'dbuserdbuser',
-    'db': 'lahman2019clean',
-    'port': 3306
-}
+_connect_info = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='dbuserdbuser',
+    db='lahman2019clean',
+    port=3306,
+    cursorclass=pymysql.cursors.DictCursor
+)
+
+
 
 def get_rdb_table(table_name, db_name, key_columns=None, connect_info=None):
     """
@@ -64,12 +67,12 @@ def get_databases():
     :return: A list of databases/schema at this endpoint.
     """
 
-    global connect_info
+    global _connect_info
 
     # db_list = list(_db_tables.keys())
     # return db_list
     sql = "SHOW DATABASES"
-    res, data = dbutils.run_q(sql, conn=connect_info)
+    res, data = dbutils.run_q(sql, conn=_connect_info)
     return data
 
 def get_tables():
