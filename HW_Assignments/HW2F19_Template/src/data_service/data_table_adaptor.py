@@ -69,16 +69,19 @@ def get_databases():
 
     global _connect_info
 
-    # db_list = list(_db_tables.keys())
-    # return db_list
     sql = "SHOW DATABASES"
-    res, data = dbutils.run_q(sql, conn=_connect_info)
+    res, data = dbutils.run_q(sql, conn=_connect_info) # This is a temporary hack
     return data
+
 
 def get_tables():
 
+    global _connect_info
 
-    pass
+    sql = "SHOW TABLES"
+    res, data = dbutils.run_q(sql, conn=_connect_info) # This is a temporary hack
+    return data
+
 
 
 
