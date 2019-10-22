@@ -70,7 +70,7 @@ def get_databases():
     global _connect_info
 
     sql = "SHOW DATABASES"
-    res, data = dbutils.run_q(sql, conn=_connect_info) # This is a temporary hack
+    res, data = dbutils.run_q(sql, conn=_connect_info)  # This is a temporary hack
     return data
 
 
@@ -79,7 +79,7 @@ def get_tables():
     global _connect_info
 
     sql = "SHOW TABLES"
-    res, data = dbutils.run_q(sql, conn=_connect_info) # This is a temporary hack
+    res, data = dbutils.run_q(sql, conn=_connect_info)  # This is a temporary hack
     return data
 
 

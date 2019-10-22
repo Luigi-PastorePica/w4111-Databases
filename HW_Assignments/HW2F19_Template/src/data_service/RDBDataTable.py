@@ -18,7 +18,7 @@ import pymysql
 import json
 
 # The helper functions from homework 1 are in this file. The RDBDataTable code below calls the functions.
-import src.data_service.dbutils as dbutils
+import HW_Assignments.HW2F19_Template.src.data_service.dbutils as dbutils
 
 # You do not need to do anything about the logging stuff. You can just ignore, or you can use if you want.
 import logging
@@ -69,6 +69,8 @@ class RDBDataTable():
         # You can use the default.
         if connect_info is None:
             self._connect_info = RDBDataTable._default_connect_info
+        else:
+            self._connect_info = connect_info
 
         # Create a connection to use inside this object. In general, this is not the right approach.
         # There would be a connection pool shared across many classes and applications.
