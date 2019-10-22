@@ -7,6 +7,18 @@ import src.data_service.RDBDataTable as RDBDataTable
 # instances.
 _db_tables = {}
 
+# Placing the connection information here is a hack implemented in office hours. I will be using this in the meantime
+# for the sake of time. What I would do if I had more time: Something similar to what one of the CAs suggested, which is
+# having RDBDataTable have None default values for table_name and db_name. In case such values were Null, connect_info
+# would have to be provided. I think in this way it would make sense to have a function return the connect info.
+connect_info = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'dbuserdbuser',
+    'db': 'lahman2019clean',
+    'port': 3306
+}
+
 def get_rdb_table(table_name, db_name, key_columns=None, connect_info=None):
     """
 
@@ -52,14 +64,18 @@ def get_databases():
     :return: A list of databases/schema at this endpoint.
     """
 
-    # -- TO IMPLEMENT --
+    global connect_info
+
+    # db_list = list(_db_tables.keys())
+    # return db_list
+    sql = "SHOW DATABASES"
+    res, data = dbutils.run_q(sql, conn=connect_info)
+    return data
+
+def get_tables():
+
+
     pass
-
-
-
-
-
-
 
 
 

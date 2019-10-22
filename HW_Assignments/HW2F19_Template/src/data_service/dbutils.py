@@ -94,7 +94,7 @@ def template_to_where_clause(template):
         args = []
         terms = []
 
-        for k,v in template.items():
+        for k, v in template.items():
             terms.append(" " + k + "=%s ")
             args.append(v)
 
@@ -126,7 +126,6 @@ def create_select(table_name, template, fields=None, order_by=None, limit=None, 
             field_list = " " + ",".join(fields) + " "
     else:
         field_list = None
-
 
     w_clause, args = template_to_where_clause(template)
 
@@ -170,7 +169,6 @@ def create_update(table_name, template, changed_cols):
 
     set_terms = ",".join(set_terms)
     set_clause = " set " + set_terms
-
 
     w_clause, args2 = template_to_where_clause(template)
 
