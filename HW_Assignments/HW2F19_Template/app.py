@@ -14,7 +14,7 @@
 from flask import Flask, Response, request
 from datetime import datetime
 import json
-import src.data_service.data_table_adaptor as dta
+import HW_Assignments.HW2F19_Template.src.data_service.data_table_adaptor as dta
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -53,6 +53,7 @@ def handle_args(args):
 # 2. Log the information
 # 3. Return extracted information.
 #
+
 def log_and_extract_input(method, path_params=None):
 
     path = request.path
@@ -115,6 +116,7 @@ def log_response(path, rsp):
 def get_field_list(inputs):
     return inputs.get('fields', None)
 
+
 def generate_error(status_code, ex=None, msg=None):
     """
 
@@ -163,7 +165,7 @@ def demo(parameter):
     :return: None
     """
 
-    inputs = log_and_extract_input(demo, { "parameter": parameter })
+    inputs = log_and_extract_input(demo, {"parameter": parameter})
 
     msg = {
         "/demo received the following inputs" : inputs
@@ -183,13 +185,13 @@ def dbs():
 
     :return: A JSON object/list containing the databases at this endpoint.
     """
-    # -- TO IMPLEMENT --
 
-    # Your code  goes here.
+    inputs = log_and_extract_input(demo, None)
 
-    # Hint: Implement the function in data_table_adaptor
-    #
+    res = dta.get_databases()
 
+    rsp = Response(json.dumps(res), status=200, content_type="application/json")
+    return rsp
 
 
 @application.route("/api/databases/<dbname>", methods=["GET"])
@@ -206,6 +208,7 @@ def tbls(dbname):
 
     # Hint: Implement the function in data_table_adaptor
     #
+    inputs = log_and_extract_input(demo, {"parameter": None})
 
 
 @application.route('/api/<dbname>/<resource>/<primary_key>', methods=['GET', 'PUT', 'DELETE'])
@@ -231,11 +234,14 @@ def resource_by_id(dbname, resource, primary_key):
 
         if request.method == 'GET':
 
-            #
-            # SOME CODE GOES HERE
-            #
-            # -- TO IMPLEMENT --
-            pass
+            fields = context.get("fields", None)  # Do not quite understand what this is doing
+            r_table = dta.get_rdb_table(resource, dbname)
+            key = primary_key.split(_key_delimiter)
+            res = r_table.find_by_primary_key(key_fields=key, field_list=fields)
+
+            rsp = Response(response=json.dumps(res, default=str), status=200, content_type="application/json")
+            # rsp = Response(response=res, status=200, content_type="application/json")
+            return rsp
 
         elif request.method == 'DELETE':
             #

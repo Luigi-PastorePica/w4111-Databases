@@ -90,8 +90,8 @@ class RDBDataTable():
         self._full_table_name = db_name + "." + table_name
 
         self._connect_info = connect_info
-        self._row_count = None
-        self._key_columns = None
+        self._row_count = self.get_row_count()
+        self._key_columns = self.get_primary_key_columns()
         self._sample_rows = None
         self._related_resources = None
         self_columns = None
@@ -99,12 +99,13 @@ class RDBDataTable():
 
         """
         You should implement these methods. See the implementation templates below.
-        """
+        
         self.get_primary_key_columns()
         self.get_row_count()
         self.get_sample_rows()
         # DFF Remove below.
         self.get_related_resources()
+        """
 
     def __str__(self):
         """
@@ -128,7 +129,10 @@ class RDBDataTable():
         :return: Returns the count of the number of rows in the table.
         """
 
-        # -- TO IMPLEMENT --
+        sql = "SELECT COUNT(*) FROM {}.{}".format(self._db_name, self._table_name)
+        res, total_rows = dbutils.run_q(sql=sql, conn=self._cnx)
+        return total_rows
+
 
     def get_primary_key_columns(self):
         """
@@ -136,10 +140,19 @@ class RDBDataTable():
         :return: A list of the primary key columns ordered by their position in the key.
         """
 
-        # -- TO IMPLEMENT --
+        # IMPORTANT: THE ORDER OF THE COLUMNS IN THE KEY DEFINITION MATTERS.
 
-        # Hint. Google "get primary key columns mysql"
-        # Hint. THE ORDER OF THE COLUMNS IN THE KEY DEFINITION MATTERS.
+        # Got the general idea from https://dataedo.com/kb/query/mysql/list-all-primary-keys-and-their-columns
+
+        sql = "SELECT COLUMN_NAME FROM information_schema.key_column_usage WHERE CONSTRAINT_NAME='PRIMARY' " \
+              "AND TABLE_SCHEMA='{}' AND TABLE_NAME='{}'".format(self._db_name, self._table_name)
+
+        pks, pk_names = dbutils.run_q(sql=sql, conn=self._cnx)
+        pk_list = []
+        for dict in pk_names:
+            pk_list.append(dict['COLUMN_NAME'])
+
+        return pk_list
 
     def get_sample_rows(self, no_of_rows=_rows_to_print):
         """

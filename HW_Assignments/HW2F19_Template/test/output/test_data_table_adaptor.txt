@@ -1,0 +1,54 @@
+RDBDataTable: 
+table_name = people
+db_name = lahman2019clean
+Table type = <class 'HW_Assignments.HW2F19_Template.src.data_service.RDBDataTable.RDBDataTable'>
+Key fields: ['playerID']
+No. of rows = [{'COUNT(*)': 19618}]
+A few sample rows = 
+None
+Related resources:
+null
+The list of databases is:
+
+             Database
+0  information_schema
+1     lahman2019clean
+2               mysql
+3  performance_schema
+4     practice_schema
+5                 sys
+
+The list of tables is:
+
+   Tables_in_lahman2019clean
+0                allstarfull
+1                appearances
+2              averageheight
+3        averageheightweight
+4             awardsmanagers
+5              awardsplayers
+6        awardssharemanagers
+7         awardsshareplayers
+8                    batting
+9                battingpost
+10            collegeplaying
+11                  fielding
+12                fieldingof
+13           fieldingofsplit
+14              fieldingpost
+15                halloffame
+16                 homegames
+17                     JOHNS
+18                  managers
+19              managershalf
+20                     parks
+21                    people
+22                  pitching
+23              pitchingpost
+24                  salaries
+25                   schools
+26                seriespost
+27                     teams
+28           teamsfranchises
+29                 teamshalf
+
