@@ -26,13 +26,14 @@ Include their first name, last name, playerID, and birth state
 Add a column called nameFull that is a concatenated version of first and last
 [hint] Use a Join between People and CollegePlaying
 */
+DROP TABLE IF EXISTS JOHNS;
 CREATE Table JOHNS as
-SELECT DISTINCT nameFirst, nameLast, people.playerID, birthState
+SELECT DISTINCT nameFirst, nameLast, concat(nameFirst, ' ', nameLast) AS nameFull, people.playerID, birthState
 FROM people
 INNER JOIN CollegePlaying
 ON people.playerID = CollegePlaying.playerID
 WHERE nameFirst='John'AND birthCountry='USA' AND schoolID LIKE 'fordham%';
--- SELECT * FROM JOHNS; -- For testing purposes
+SELECT * FROM JOHNS; -- For testing purposes
 
 /* The query below gave me the same result as the one above. I pick the one above as my answer for simplicity.*/
 -- CREATE Table JOHNS as
