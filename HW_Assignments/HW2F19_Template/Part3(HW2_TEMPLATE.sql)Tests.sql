@@ -3,13 +3,14 @@ select * from johns;
 #where schoolID like 'fordham%';
 
 /*Q2*/
--- DROP TABLE IF EXISTS JOHNS;
--- CREATE Table JOHNS as
--- SELECT DISTINCT nameFirst, nameLast, people.playerID, birthState
--- FROM people
--- INNER JOIN CollegePlaying
--- ON people.playerID = CollegePlaying.playerID
--- WHERE nameFirst='John'AND birthCountry='USA' AND schoolID LIKE 'fordham%';
+DROP TABLE IF EXISTS JOHNS;
+CREATE Table JOHNS as
+SELECT DISTINCT nameFirst, nameLast, concat(nameFirst, ' ', nameLast) AS nameFull, people.playerID, birthState
+FROM people
+INNER JOIN CollegePlaying
+ON people.playerID = CollegePlaying.playerID
+WHERE nameFirst='John'AND birthCountry='USA' AND schoolID LIKE 'fordham%';
+SELECT * FROM JOHNS;
 
 DROP TABLE IF EXISTS JOHNS;
 CREATE Table JOHNS as
@@ -21,6 +22,7 @@ INNER JOIN (SELECT playerID, schoolID
 			FROM CollegePlaying 
             WHERE schoolID LIKE 'fordham%') as fordhamAlumni
 ON usJohns.playerID = fordhamAlumni.playerID;
+SELECT * FROM JOHNS;
 
 /*Q3*/
 
